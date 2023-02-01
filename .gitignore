@@ -1,0 +1,12 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+PrismBot/bin
+PrismBot/obj
+PrismBot.SDK/bin
+PrismBot.SDK/obj
