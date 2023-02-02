@@ -71,21 +71,49 @@ public class PluginLoader
                                 //判断Guest组是否有权限
                                 if (group.HasPermission(registeredGroupCommand.GetPermission()))
                                 {
-                                    await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                                    try
+                                    {
+                                        await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e);
+                                    }
                                     return;
                                 }
 
-                                await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                try
+                                {
+                                    await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 return;
                             }
                             //判断玩家是否已经注册过了或者玩家是否没有权限
                             if ((player == null || !player.HasPermission(registeredGroupCommand.GetPermission())) && !args.IsSuperUser)
                             {
-                                await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                try
+                                {
+                                    await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 return;
                             }
 
-                            await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                            try
+                            {
+                                await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                            }
                         }
                     };
                 //加载私聊事件
@@ -115,21 +143,49 @@ public class PluginLoader
                                 //判断Guest组是否有权限
                                 if (group.HasPermission(registeredPrivateCommand.GetPermission()))
                                 {
-                                    await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                                    try
+                                    {
+                                        await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e);
+                                    }
                                     return;
                                 }
 
-                                await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                try
+                                {
+                                    await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 return;
                             }
 
                             if ((player == null || !player.HasPermission(registeredPrivateCommand.GetPermission())) && !args.IsSuperUser)
                             {
-                                await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                try
+                                {
+                                    await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e);
+                                }
                                 return;
                             }
 
-                            await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                            try
+                            {
+                                await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                            }
                         }
                     };
                 }
