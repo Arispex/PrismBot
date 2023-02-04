@@ -4,6 +4,6 @@ namespace PrismBot.SDK.Interfaces;
 
 public interface IGroupCommand : ICommand
 {
-    Task OnPermissionDenied(string type, GroupMessageEventArgs eventArgs);
-    Task OnPermissionGranted(string type, GroupMessageEventArgs eventArgs);
+    Task OnPermissionDeniedAsync(string type, GroupMessageEventArgs eventArgs);
+    Task OnPermissionGrantedAsync(string type, GroupMessageEventArgs eventArgs);
 }

@@ -4,7 +4,7 @@ namespace PrismBot.SDK.Extensions;
 
 public static class PrivateMessageEventArgsExtension
 {
-    public static async Task SendDefaultPermissionDeniedMessage(this PrivateMessageEventArgs privateMessageEventArgs)
+    public static async Task SendDefaultPermissionDeniedMessageAsync(this PrivateMessageEventArgs privateMessageEventArgs)
     {
         await privateMessageEventArgs.Sender.SendPrivateMessage("你无权访问此命令");
     }

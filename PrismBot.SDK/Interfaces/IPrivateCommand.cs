@@ -4,6 +4,6 @@ namespace PrismBot.SDK.Interfaces;
 
 public interface IPrivateCommand: ICommand
 {
-    Task OnPermissionDenied(string type, PrivateMessageEventArgs eventArgs);
-    Task OnPermissionGranted(string type, PrivateMessageEventArgs eventArgs);
+    Task OnPermissionDeniedAsync(string type, PrivateMessageEventArgs eventArgs);
+    Task OnPermissionGrantedAsync(string type, PrivateMessageEventArgs eventArgs);
 }

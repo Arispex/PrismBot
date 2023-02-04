@@ -59,7 +59,7 @@ public class PluginLoader
                                 .ThenInclude(g => g.Parent)
                                 .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
                             //判断玩家是否是游客
-                            if (await args.Sender.IsGuest())
+                            if (await args.Sender.IsGuestAsync())
                             {
                                 //判断游客组是否有权限
                                 var group = await botDbContext.Groups.FindAsync("Guest");
@@ -73,7 +73,7 @@ public class PluginLoader
                                 {
                                     try
                                     {
-                                        await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                                        await registeredGroupCommand.OnPermissionGrantedAsync(eventType, args);
                                     }
                                     catch (Exception e)
                                     {
@@ -84,7 +84,7 @@ public class PluginLoader
 
                                 try
                                 {
-                                    await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                    await registeredGroupCommand.OnPermissionDeniedAsync(eventType, args);
                                 }
                                 catch (Exception e)
                                 {
@@ -97,7 +97,7 @@ public class PluginLoader
                             {
                                 try
                                 {
-                                    await registeredGroupCommand.OnPermissionDenied(eventType, args);
+                                    await registeredGroupCommand.OnPermissionDeniedAsync(eventType, args);
                                 }
                                 catch (Exception e)
                                 {
@@ -108,7 +108,7 @@ public class PluginLoader
 
                             try
                             {
-                                await registeredGroupCommand.OnPermissionGranted(eventType, args);
+                                await registeredGroupCommand.OnPermissionGrantedAsync(eventType, args);
                             }
                             catch (Exception e)
                             {
@@ -131,7 +131,7 @@ public class PluginLoader
                                 .ThenInclude(g => g.Parent)
                                 .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
                             //判断玩家是否是游客
-                            if (await args.Sender.IsGuest())
+                            if (await args.Sender.IsGuestAsync())
                             {
                                 //判断游客组是否有权限
                                 var group = await botDbContext.Groups.FindAsync("Guest");
@@ -145,7 +145,7 @@ public class PluginLoader
                                 {
                                     try
                                     {
-                                        await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                                        await registeredPrivateCommand.OnPermissionGrantedAsync(eventType, args);
                                     }
                                     catch (Exception e)
                                     {
@@ -156,7 +156,7 @@ public class PluginLoader
 
                                 try
                                 {
-                                    await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                    await registeredPrivateCommand.OnPermissionDeniedAsync(eventType, args);
                                 }
                                 catch (Exception e)
                                 {
@@ -169,7 +169,7 @@ public class PluginLoader
                             {
                                 try
                                 {
-                                    await registeredPrivateCommand.OnPermissionDenied(eventType, args);
+                                    await registeredPrivateCommand.OnPermissionDeniedAsync(eventType, args);
                                 }
                                 catch (Exception e)
                                 {
@@ -180,7 +180,7 @@ public class PluginLoader
 
                             try
                             {
-                                await registeredPrivateCommand.OnPermissionGranted(eventType, args);
+                                await registeredPrivateCommand.OnPermissionGrantedAsync(eventType, args);
                             }
                             catch (Exception e)
                             {
