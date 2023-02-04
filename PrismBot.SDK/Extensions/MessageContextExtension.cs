@@ -5,7 +5,7 @@ namespace PrismBot.SDK.Extensions;
 
 public static class MessageContextExtension
 {
-    public static async Task<string[]> GetCommandArgsAsync(this MessageContext messageContext)
+    public static string[] GetCommandArgs(this MessageContext messageContext)
     {
         return messageContext.RawText.Split(" ");
     }
