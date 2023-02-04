@@ -50,6 +50,10 @@ public class PluginLoader
                 foreach (var registeredGroupCommand in registeredGroupCommands)
                     Service.Event.OnGroupMessage += async (eventType, args) =>
                     {
+                        if (!config.Groups.Contains(args.SourceGroup.Id))
+                        {
+                            return;
+                        }
                         if (registeredGroupCommand.Match(eventType, args))
                         {
                             var botDbContext = new BotDbContext();
