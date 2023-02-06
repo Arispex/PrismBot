@@ -9,6 +9,7 @@
         <RepositoryUrl>https://github.com/Qianyiovo/PrismBot</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Qianyiovo</Authors>
+        <PackageLicenseUrl>LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
     <ItemGroup>
