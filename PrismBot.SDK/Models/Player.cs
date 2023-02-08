@@ -15,7 +15,18 @@ public class Player
 
     public bool RefreshedPermission = false;
 
-    public void RefreshPermission()
+    public Player(long qq, string userName, Group group)
+    {
+        QQ = qq;
+        UserName = userName;
+        Group = group;
+        Permissions = string.Empty;
+        Coins = 0;
+    }
+    
+    private Player() {}
+
+    private void RefreshPermission()
     {
         if (Permissions.Length == 0)
         {

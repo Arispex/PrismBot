@@ -10,6 +10,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Qianyiovo</Authors>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageVersion>1.0.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

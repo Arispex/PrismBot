@@ -4,7 +4,7 @@ namespace PrismBot.SDK.Models;
 
 public class Group
 {
-    private List<string> _permissions;
+    private List<string> _permissions = new List<string>();
 
     [Key] public string GroupName { get; set; }
 
@@ -13,7 +13,16 @@ public class Group
     
     public bool RefreshedPermission = false;
 
-    public void RefreshPermission()
+    public Group(string groupName, Group? parent)
+    {
+        GroupName = groupName;
+        Parent = parent;
+        Permissions = string.Empty;
+    }
+
+    private Group() {}
+
+    private void RefreshPermission()
     {
         if (Permissions.Length == 0)
         {

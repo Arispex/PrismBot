@@ -66,7 +66,7 @@ var group = await botDbContext.Groups.FindAsync("Guest");
 if (group == null)
 {
     //不存在则自动创建
-    await botDbContext.AddAsync(GroupFactory.CreateGroup("Guest", null));
+    await botDbContext.AddAsync(new Group("Guest", null));
     Log.Warning("System","Guest组别不存在，已自动创建");
 }
 await botDbContext.SaveChangesAsync();

@@ -11,6 +11,17 @@ public class Server
     public string Token { get; set; }
 
     [Key] public string Identity { get; set; }
+
+    public Server(string serverName, string host, int port, string token, string identity)
+    {
+        ServerName = serverName;
+        Host = host;
+        Port = port;
+        Token = token;
+        Identity = identity;
+    }
+    
+    private Server() {}
     
     public async Task<string[]> GetActiveListAsync()
     {
