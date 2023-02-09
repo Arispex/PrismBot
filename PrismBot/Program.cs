@@ -1,4 +1,5 @@
 ﻿using PrismBot;
+using PrismBot.plugins.MessageLogger;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Models;
 using PrismBot.SDK.Singletons;
@@ -58,13 +59,14 @@ SoraServiceSingleton.Instance.SoraService = service;
 //获取plugins目录下的插件
 var pluginFiles = Directory.GetFiles(pluginFolderPath);
 //加载内置插件
+PluginLoader.Load(new MessageLogger());
 //加载插件
 foreach (var pluginFile in pluginFiles)
     if (pluginFile.EndsWith(".dll"))
     {
         PluginLoader.LoadFromPath(pluginFile);
     }
-
+Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插件");
 //判断是否存在Guest组别
 var botDbContext = new BotDbContext();
 var group = await botDbContext.Groups.FindAsync("Guest");
@@ -79,7 +81,6 @@ await botDbContext.SaveChangesAsync();
 //启动GenHttp
 PluginLoader.StartGenHttp();
 //测试
-Console.WriteLine(PluginLoader.LoadedPlugins.Count);
 //启动服务并捕捉错误
 await service.StartService()
     .RunCatch(e => Log.Error("Sora Service", Log.ErrorLogBuilder(e)));
