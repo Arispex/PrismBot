@@ -12,6 +12,12 @@ public class Player
     public long Coins { get; set; }
     public Group Group { get; set; }
     public string Permissions { get; set; }
+    
+    public string RegistrationTime { get; set; }
+    
+    public bool IsFreeze { get; set; }
+    
+    public bool IsSignedIn { get; set; }
 
     public bool RefreshedPermission = false;
 
@@ -22,6 +28,9 @@ public class Player
         Group = group;
         Permissions = string.Empty;
         Coins = 0;
+        RegistrationTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        IsFreeze = false;
+        IsSignedIn = false;
     }
     
     private Player() {}

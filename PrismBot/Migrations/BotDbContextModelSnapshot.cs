@@ -47,7 +47,17 @@ namespace PrismBot.Migrations
                     b.Property<string>("GroupName")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsFreeze")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsSignedIn")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Permissions")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegistrationTime")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
