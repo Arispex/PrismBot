@@ -59,6 +59,7 @@ public class Group
         {
             RefreshPermission();
         }
+        if (permission == String.Empty) return true;
         if (_permissions.Contains(permission)) return true;
         if (Parent != null) return Parent.HasPermission(permission);
         return false;
