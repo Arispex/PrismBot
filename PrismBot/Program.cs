@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PrismBot;
+﻿using PrismBot;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Models;
+using PrismBot.SDK.Singletons;
 using PrismBot.SDK.Static;
 using Sora;
 using Sora.Net.Config;
@@ -53,13 +53,18 @@ var service = SoraServiceFactory.CreateService(new ServerConfig
     SuperUsers = config.SuperUsers,
     BlockUsers = config.BlockUsers
 });
+//存放Sora服务
+SoraServiceSingleton.Instance.SoraService = service;
 //获取plugins目录下的插件
 var pluginFiles = Directory.GetFiles(pluginFolderPath);
+//加载内置插件
 //加载插件
-var pluginLoader = new PluginLoader(service);
 foreach (var pluginFile in pluginFiles)
     if (pluginFile.EndsWith(".dll"))
-        pluginLoader.LoadFromPluginPath(pluginFile);
+    {
+        PluginLoader.LoadFromPath(pluginFile);
+    }
+
 //判断是否存在Guest组别
 var botDbContext = new BotDbContext();
 var group = await botDbContext.Groups.FindAsync("Guest");
@@ -67,12 +72,14 @@ if (group == null)
 {
     //不存在则自动创建
     await botDbContext.AddAsync(new Group("Guest", null));
-    Log.Warning("System","Guest组别不存在，已自动创建");
+    Log.Warning("System", "Guest组别不存在，已自动创建");
 }
+
 await botDbContext.SaveChangesAsync();
 //启动GenHttp
-pluginLoader.StartGenHttp();
+PluginLoader.StartGenHttp();
 //测试
+Console.WriteLine(PluginLoader.LoadedPlugins.Count);
 //启动服务并捕捉错误
 await service.StartService()
     .RunCatch(e => Log.Error("Sora Service", Log.ErrorLogBuilder(e)));

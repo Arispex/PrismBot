@@ -25,8 +25,4 @@
         <ProjectReference Include="..\PrismBot.SDK\PrismBot.SDK.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="plugins" />
-    </ItemGroup>
-
 </Project>
