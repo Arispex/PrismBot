@@ -19,7 +19,8 @@ Log.LogConfiguration
     .SetLogLevel(LogLevel.Info);
 
 Log.Info("System", "PrismBot v1.0 By Qianyiovo - The Ultimate Terraria TShock QQ Bot");
-
+Log.Info("System", "Github：https://github.com/Qianyiovo/PrismBot");
+Log.Info("System", "Copyright © 2023-present Qianyiovo");
 Log.Info("System", "正在读取配置文件...");
 //检测配置文件是否存在
 var config = ConfigManager.GetBotConfig();
