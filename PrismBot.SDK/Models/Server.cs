@@ -55,7 +55,10 @@ public class Server
                 await response.Content.ReadAsStreamAsync());
         return result;
     }
-
+    /// <summary>
+    /// 获取在线且已登入的玩家昵称
+    /// </summary>
+    /// <returns>在线且已登入的玩家昵称的数组</returns>
     public async Task<string[]> GetActiveListAsync()
     {
         var result = await SendGetToEndpointAsync("v2/users/activelist", new Dictionary<string, object>

@@ -1,5 +1,8 @@
 namespace PrismBot.SDK.Models;
 
+/// <summary>
+/// 机器人主配置文件对象
+/// </summary>
 public class Config
 {
     public string AccessToken = string.Empty;

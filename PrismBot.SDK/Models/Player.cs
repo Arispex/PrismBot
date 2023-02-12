@@ -44,6 +44,10 @@ public class Player
         }
         _permissions = new List<string>(Permissions.Split(","));
     }
+    /// <summary>
+    /// 增加权限
+    /// </summary>
+    /// <param name="permission">权限名</param>
     public void AddPermission(string permission)
     {
         if (!RefreshedPermission)
@@ -55,6 +59,10 @@ public class Player
         Permissions = string.Join(",", _permissions);
     }
 
+    /// <summary>
+    /// 删除权限
+    /// </summary>
+    /// <param name="permission">权限名</param>
     public void RemovePermission(string permission)
     {
         if (!RefreshedPermission)
@@ -65,6 +73,11 @@ public class Player
         Permissions = string.Join(",", _permissions);
     }
 
+    /// <summary>
+    /// 判断是否拥有指定权限
+    /// </summary>
+    /// <param name="permission">需要判断的权限名</param>
+    /// <returns></returns>
     public bool HasPermission(string permission)
     {
         if (!RefreshedPermission)
@@ -78,6 +91,10 @@ public class Player
         return false;
     }
 
+    /// <summary>
+    /// 获取权限列表
+    /// </summary>
+    /// <returns>权限列表</returns>
     public List<string> GetPermissions()
     {
         if (!RefreshedPermission)
