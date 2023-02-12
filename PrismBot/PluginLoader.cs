@@ -63,7 +63,7 @@ public static class PluginLoader
                         }
 
                         //判断Guest组是否有权限
-                        if (group.HasPermission(registeredGroupCommand.GetPermission()))
+                        if (group.HasPermission(registeredGroupCommand.GetPermission()) || args.IsSuperUser)
                         {
                             try
                             {
@@ -141,7 +141,7 @@ public static class PluginLoader
                         }
 
                         //判断Guest组是否有权限
-                        if (group.HasPermission(registeredPrivateCommand.GetPermission()))
+                        if (group.HasPermission(registeredPrivateCommand.GetPermission()) || args.IsSuperUser)
                         {
                             try
                             {
