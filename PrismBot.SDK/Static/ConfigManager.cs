@@ -10,15 +10,15 @@ public static class ConfigManager
     /// </summary>
     /// <param name="fileName">文件名</param>
     /// <returns></returns>
-    public static Dictionary<string, object>? GetConfig(string fileName)
+    public static T GetConfig<T>(string fileName)
     {
         var configPath = Path.Combine(Environment.CurrentDirectory, fileName);
-        if (!File.Exists(configPath)) return null;
+        if (!File.Exists(configPath)) throw new FileNotFoundException($"找不到配置文件 {fileName}");
 
         using (var streamReader = new StreamReader(configPath))
         {
             var deserializer = new Deserializer();
-            return deserializer.Deserialize<Dictionary<string, object>>(streamReader);
+            return deserializer.Deserialize<T>(streamReader);
         }
     }
 
@@ -26,10 +26,10 @@ public static class ConfigManager
     /// 获得机器人的主配置文件(config.yml)
     /// </summary>
     /// <returns>配置文件</returns>
-    public static Config? GetBotConfig()
+    public static Config GetBotConfig()
     {
         var configPath = Path.Combine(Environment.CurrentDirectory, "config.yml");
-        if (!File.Exists(configPath)) return null;
+        if (!File.Exists(configPath)) throw new FileNotFoundException("找不到配置文件 config.yml");
         using (var streamReader = new StreamReader(configPath))
         {
             var deserializer = new Deserializer();
