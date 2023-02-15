@@ -18,9 +18,10 @@ Log.LogConfiguration
     .EnableConsoleOutput()
     .SetLogLevel(LogLevel.Info);
 
-Log.Info("System", "PrismBot v1.0 By Qianyiovo - The Ultimate Terraria TShock QQ Bot");
 Log.Info("System", "Github：https://github.com/Qianyiovo/PrismBot");
 Log.Info("System", "Copyright © 2023-present Qianyiovo");
+Log.Info("System", "本项目基于 AGPL v3.0 许可证授权发行，您可以在遵守许可证的前提下自由使用、复制、修改、发布和分发本项目");
+Log.Info("System", "有关 AGPL v3.0 许可证的详细信息，请参阅 https://www.gnu.org/licenses/agpl-3.0.html");
 Log.Info("System", "正在读取配置文件...");
 //检测配置文件是否存在
 try
