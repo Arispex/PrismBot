@@ -23,8 +23,11 @@ Log.Info("System", "Github：https://github.com/Qianyiovo/PrismBot");
 Log.Info("System", "Copyright © 2023-present Qianyiovo");
 Log.Info("System", "正在读取配置文件...");
 //检测配置文件是否存在
-var config = ConfigManager.GetBotConfig();
-if (config == null)
+try
+{
+    ConfigManager.GetBotConfig();
+}
+catch (FileNotFoundException)
 {
     var serializer = new Serializer();
     var configPath = Path.Combine(Environment.CurrentDirectory, "config.yml");
@@ -35,16 +38,20 @@ if (config == null)
     }
 
     Log.Warning("System", "检测到配置文件不存在，已生成默认配置文件");
+    Log.Warning("System", "请在config.yml中填写相关配置后重启");
+    Log.Warning("System", "按任意键退出");
+    Console.ReadKey();
+    Environment.Exit(0);
 }
 
 //读取配置文件
+var config = ConfigManager.GetBotConfig();
 Log.Info("System", "配置文件读取成功");
 //检测插件目录是否存在
 var pluginFolderPath = Path.Combine(Environment.CurrentDirectory, "plugins");
 if (!Directory.Exists(pluginFolderPath))
     //不存在则创建
     Directory.CreateDirectory(pluginFolderPath);
-config = ConfigManager.GetBotConfig();
 //实例化Sora服务
 var service = SoraServiceFactory.CreateService(new ServerConfig
 {
