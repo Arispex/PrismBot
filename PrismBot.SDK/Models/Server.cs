@@ -3,6 +3,7 @@ using System.Net;
 using System.Text.Json;
 using System.Web;
 using PrismBot.SDK.Exceptions;
+using YamlDotNet.Core.Tokens;
 
 namespace PrismBot.SDK.Models;
 
@@ -26,16 +27,23 @@ public class Server
     
     private Server() {}
 
-    public async Task<Dictionary<string, string>> SendGetToEndpointAsync(string endpointPath,
+    /// <summary>
+    /// 发送GET请求至指定端点
+    /// </summary>
+    /// <param name="endpointPath">端点路径</param>
+    /// <param name="params">GET请求参数</param>
+    /// <typeparam name="T">JSON反序列化类型</typeparam>
+    /// <returns>JSON反序列化结果</returns>
+    /// <exception cref="InvalidToken">Token错误</exception>
+    /// <exception cref="NotAuthorized">该端点需要Token验证</exception>
+    /// <exception cref="MissingParameters">缺少指定参数</exception>
+    public async Task<T> SendGetToEndpointAsync<T>(string endpointPath,
         Dictionary<string, object> @params)
     {
         var query = HttpUtility.ParseQueryString(String.Empty);
-        foreach (var key in @params.Keys)
+        foreach (var (key, value) in @params)
         {
-            foreach (var value in @params.Values)
-            {
-                query[key] = value.ToString();
-            }
+            query[key] = value.ToString();
         }
         using var httpClient = new HttpClient();
         var response = await httpClient.GetAsync($"http://{Host}:{Port}/{endpointPath}?{query}");
@@ -51,7 +59,7 @@ public class Server
 
         response.EnsureSuccessStatusCode();
         var result =
-            await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(
+            await JsonSerializer.DeserializeAsync<T>(
                 await response.Content.ReadAsStreamAsync());
         return result;
     }
@@ -61,12 +69,41 @@ public class Server
     /// <returns>在线且已登入的玩家昵称的数组</returns>
     public async Task<string[]> GetActiveListAsync()
     {
-        var result = await SendGetToEndpointAsync("v2/users/activelist", new Dictionary<string, object>
+        var result = await SendGetToEndpointAsync<Dictionary<string, string>>("v2/users/activelist", new Dictionary<string, object>
         {
             {"token", Token}
         });
         var activeUsers = result["activeusers"];
         if (activeUsers.Length == 0) return Array.Empty<String>();
         return activeUsers.Split("\t");
+    }
+    
+    /// <summary>
+    /// 获取服务器状态信息
+    /// </summary>
+    /// <returns>服务器状态对象</returns>
+    public async Task<ServerStatus> GetServerStatusAsync()
+    {
+        return await SendGetToEndpointAsync<ServerStatus>("v2/server/status", new Dictionary<string, object>
+        {
+            {"token", Token},
+            {"players", true}
+        });
+    }
+
+    /// <summary>
+    /// 执行远程指令
+    /// </summary>
+    /// <param name="command">执行的指令（以/开头）</param>
+    /// <returns>API中response数组</returns>
+    public async Task<string[]> ExecuteRemoteCommandAsync(string command)
+    {
+        var result = await SendGetToEndpointAsync<Dictionary<string, object>>("v3/server/rawcmd",
+            new Dictionary<string, object>
+            {
+                {"token", Token},
+                {"cmd", command}
+            });
+        return JsonSerializer.Deserialize<string[]>(result["response"].ToString());
     }
 }
