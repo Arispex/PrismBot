@@ -84,7 +84,7 @@ public class Player
         {
             RefreshPermission();
         }
-        if (permission == String.Empty) return true;
+        if (permission == string.Empty) return true;
         if (_permissions.Contains(permission)) return true;
 
         if (Group.HasPermission(permission)) return true;

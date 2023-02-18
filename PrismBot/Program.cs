@@ -70,11 +70,8 @@ var pluginFiles = Directory.GetFiles(pluginFolderPath);
 //加载内置插件
 PluginLoader.Load(new MessageLogger());
 //加载插件
-foreach (var pluginFile in pluginFiles)
-    if (pluginFile.EndsWith(".dll"))
-    {
-        PluginLoader.LoadFromPath(pluginFile);
-    }
+pluginFiles.Where(x => x.EndsWith(".dll")).ToList().ForEach(x => PluginLoader.LoadFromPath(x));
+
 Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插件");
 //判断是否存在Guest组别
 var botDbContext = new BotDbContext();

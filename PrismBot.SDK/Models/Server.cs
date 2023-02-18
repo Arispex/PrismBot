@@ -40,7 +40,7 @@ public class Server
     public async Task<T> SendGetToEndpointAsync<T>(string endpointPath,
         Dictionary<string, object> @params)
     {
-        var query = HttpUtility.ParseQueryString(String.Empty);
+        var query = HttpUtility.ParseQueryString(string.Empty);
         foreach (var (key, value) in @params)
         {
             query[key] = value.ToString();
@@ -71,10 +71,10 @@ public class Server
     {
         var result = await SendGetToEndpointAsync<Dictionary<string, string>>("v2/users/activelist", new Dictionary<string, object>
         {
-            {"token", Token}
+            {"token", this.Token}
         });
         var activeUsers = result["activeusers"];
-        if (activeUsers.Length == 0) return Array.Empty<String>();
+        if (activeUsers.Length == 0) return Array.Empty<string>();
         return activeUsers.Split("\t");
     }
     
@@ -86,7 +86,7 @@ public class Server
     {
         return await SendGetToEndpointAsync<ServerStatus>("v2/server/status", new Dictionary<string, object>
         {
-            {"token", Token},
+            {"token", this.Token},
             {"players", true}
         });
     }
@@ -101,7 +101,7 @@ public class Server
         var result = await SendGetToEndpointAsync<Dictionary<string, object>>("v3/server/rawcmd",
             new Dictionary<string, object>
             {
-                {"token", Token},
+                {"token", this.Token},
                 {"cmd", command}
             });
         return JsonSerializer.Deserialize<string[]>(result["response"].ToString());

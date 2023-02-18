@@ -35,6 +35,7 @@ public static class PluginLoader
         //加载群聊事件
         var registeredGroupCommands = p.GetRegisteredGroupCommands();
         foreach (var registeredGroupCommand in registeredGroupCommands)
+        {
             Service.Event.OnGroupMessage += async (eventType, args) =>
             {
                 //判断群是否在白名单内
@@ -115,6 +116,7 @@ public static class PluginLoader
                     }
                 }
             };
+        }
         //加载私聊事件
         var registeredPrivateCommands = p.GetRegisteredPrivateCommands();
         foreach (var registeredPrivateCommand in registeredPrivateCommands)
@@ -202,16 +204,7 @@ public static class PluginLoader
 
     public static void LoadFromPath(string path)
     {
-        var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-        var types = assembly.GetTypes();
-
-        foreach (var type in types)
-            if (type.IsSubclassOf(typeof(Plugin)))
-            {
-                var o = Activator.CreateInstance(type);
-                var p = o as Plugin;
-                Load(p);
-            }
+        AssemblyLoadContext.Default.LoadFromAssemblyPath(path).GetTypes().Where(x => x.IsSubclassOf(typeof(Plugin))).ToList().ForEach(x => Load((Plugin)Activator.CreateInstance(x)!));
     }
 
     public static void StartGenHttp()

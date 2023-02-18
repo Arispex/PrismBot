@@ -15,25 +15,25 @@ public abstract class Plugin
     /// 获取已注册的群命令
     /// </summary>
     /// <returns>群命令列表</returns>
-    public List<IGroupCommand> GetRegisteredGroupCommands()
+    public virtual List<IGroupCommand> GetRegisteredGroupCommands()
     {
-        return CommandManager.RegisteredGroupCommands;
+        return new();
     }
     /// <summary>
     /// 获取已注册的私聊命令
     /// </summary>
     /// <returns>私聊命名列表</returns>
-    public List<IPrivateCommand> GetRegisteredPrivateCommands()
+    public virtual List<IPrivateCommand> GetRegisteredPrivateCommands()
     {
-        return CommandManager.RegisteredPrivateCommands;
+        return new();
     }
 
     /// <summary>
     /// 获取已注册的端点
     /// </summary>
     /// <returns>端点列表</returns>
-    public List<EndPoint> GetRegisteredEndPoints()
+    public virtual List<EndPoint> GetRegisteredEndPoints()
     {
-        return EndPointManager.RegisteredEndPoints;
+        return new();
     }
 }

@@ -16,10 +16,7 @@ public sealed class SoraServiceSingleton
         {
             lock (Padlock)
             {
-                if (_instance == null)
-                {
-                    _instance = new SoraServiceSingleton();
-                }
+                _instance ??= new SoraServiceSingleton();
                 return _instance;
             }
         }

@@ -72,12 +72,9 @@ public class Group
         {
             RefreshPermission();
         }
-        if (permission == String.Empty) return true;
-        if (_permissions.Contains(permission)) return true;
-        if (Parent != null) return Parent.HasPermission(permission);
-        return false;
+        return permission == string.Empty || _permissions.Contains(permission) || (Parent is not null && Parent.HasPermission(permission));
     }
-    
+
     /// <summary>
     /// 获取权限列表
     /// </summary>
