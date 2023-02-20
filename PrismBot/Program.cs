@@ -32,7 +32,7 @@ catch (FileNotFoundException)
 {
     var serializer = new Serializer();
     var configPath = Path.Combine(Environment.CurrentDirectory, "config.yml");
-    using (var configStreamWriter = new StreamWriter(configPath))
+    await using (var configStreamWriter = new StreamWriter(configPath))
     {
         var defaultConfig = new Config();
         serializer.Serialize(configStreamWriter, defaultConfig);
@@ -75,6 +75,8 @@ foreach (var pluginFile in pluginFiles)
     {
         PluginLoader.LoadFromPath(pluginFile);
     }
+//注册插件事件
+PluginLoader.RegisterAll();
 Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插件");
 //判断是否存在Guest组别
 var botDbContext = new BotDbContext();
