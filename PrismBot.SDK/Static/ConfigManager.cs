@@ -12,7 +12,7 @@ public static class ConfigManager
     /// <returns></returns>
     public static T GetConfig<T>(string fileName)
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, fileName);
+        var configPath = Path.Combine(Environment.CurrentDirectory, "configs", fileName);
         if (!File.Exists(configPath)) throw new FileNotFoundException($"找不到配置文件 {fileName}");
 
         using (var streamReader = new StreamReader(configPath))
