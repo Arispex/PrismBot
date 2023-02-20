@@ -72,9 +72,7 @@ PluginLoader.Load(new MessageLogger());
 //加载插件
 foreach (var pluginFile in pluginFiles)
     if (pluginFile.EndsWith(".dll"))
-    {
         PluginLoader.LoadFromPath(pluginFile);
-    }
 //注册插件事件
 PluginLoader.RegisterAll();
 Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插件");

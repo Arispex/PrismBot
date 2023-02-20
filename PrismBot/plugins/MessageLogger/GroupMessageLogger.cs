@@ -1,11 +1,10 @@
-using PrismBot.SDK.Extensions;
 using PrismBot.SDK.Interfaces;
 using Sora.EventArgs.SoraEvent;
 using YukariToolBox.LightLog;
 
 namespace PrismBot.plugins.MessageLogger;
 
-public class GroupMessageLogger: IGroupCommand
+public class GroupMessageLogger : IGroupCommand
 {
     public bool Match(string type, BaseMessageEventArgs eventArgs)
     {
@@ -14,12 +13,11 @@ public class GroupMessageLogger: IGroupCommand
 
     public string GetPermission()
     {
-        return String.Empty;
+        return string.Empty;
     }
 
     public async Task OnPermissionDeniedAsync(string type, GroupMessageEventArgs eventArgs)
     {
-        return;
     }
 
     public async Task OnPermissionGrantedAsync(string type, GroupMessageEventArgs eventArgs)

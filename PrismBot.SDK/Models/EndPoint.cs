@@ -2,8 +2,8 @@ namespace PrismBot.SDK.Models;
 
 public class EndPoint
 {
-    public string Path;
     public Delegate Delegate;
+    public string Path;
 
     public EndPoint(string path, Delegate function)
     {

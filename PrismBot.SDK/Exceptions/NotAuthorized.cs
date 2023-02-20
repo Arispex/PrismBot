@@ -1,7 +1,7 @@
 namespace PrismBot.SDK.Exceptions;
 
 /// <summary>
-/// 未提供token（缺少token参数）
+///     未提供token（缺少token参数）
 /// </summary>
 public class NotAuthorized : Exception
 {

@@ -3,7 +3,7 @@ using PrismBot.SDK.Static;
 
 namespace PrismBot.plugins.MessageLogger;
 
-public class MessageLogger: Plugin
+public class MessageLogger : Plugin
 {
     public override string GetPluginName()
     {

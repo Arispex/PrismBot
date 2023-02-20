@@ -1,9 +1,9 @@
 namespace PrismBot.SDK.Exceptions;
 
 /// <summary>
-/// REST API缺少参数
+///     REST API缺少参数
 /// </summary>
-public class MissingParameters: Exception
+public class MissingParameters : Exception
 {
     public MissingParameters()
     {
