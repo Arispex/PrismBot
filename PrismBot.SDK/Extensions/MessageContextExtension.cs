@@ -11,6 +11,6 @@ public static class MessageContextExtension
     /// <returns></returns>
     public static string[] GetCommandArgs(this MessageContext messageContext)
     {
-        return messageContext.RawText.Split(" ");
+        return messageContext.RawText.Trim().Split(" ");
     }
 }
