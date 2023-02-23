@@ -27,7 +27,7 @@ public static class ConfigManager
     /// <param name="paths">配置文件路径</param>
     public static void SaveConfig(object obj, params string[] paths)
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, "configs", Path.Combine(paths));
+        var configPath = Path.Combine(Environment.CurrentDirectory, Path.Combine(paths));
         
         using var streamWriter = new StreamWriter(configPath);
         var serializer = new Serializer();
