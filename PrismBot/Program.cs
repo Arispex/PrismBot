@@ -53,11 +53,6 @@ var pluginFolderPath = Path.Combine(Environment.CurrentDirectory, "plugins");
 if (!Directory.Exists(pluginFolderPath))
     //不存在则创建
     Directory.CreateDirectory(pluginFolderPath);
-//检测配置文件目录是否存在
-var configFolderPath = Path.Combine(Environment.CurrentDirectory, "configs");
-if (!Directory.Exists(configFolderPath))
-    //不存在则创建
-    Directory.CreateDirectory(configFolderPath);
 //实例化Sora服务
 var service = SoraServiceFactory.CreateService(new ServerConfig
 {
