@@ -20,9 +20,14 @@ public static class ConfigManager
         return deserializer.Deserialize<T>(streamReader);
     }
 
-    public static void SaveConfig(string fileName, object obj)
+    /// <summary>
+    /// 保存配置文件
+    /// </summary>
+    /// <param name="obj">配置文件实例</param>
+    /// <param name="paths">配置文件路径</param>
+    public static void SaveConfig(object obj, params string[] paths)
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, "configs", fileName);
+        var configPath = Path.Combine(Environment.CurrentDirectory, "configs", Path.Combine(paths));
         
         using var streamWriter = new StreamWriter(configPath);
         var serializer = new Serializer();
