@@ -72,15 +72,16 @@ Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插�
 
 
 //判断是否存在Guest组别
-var botDbContext = new BotDbContext();
-var group = await botDbContext.Groups.FindAsync("Guest");
+await using var db = new BotDbContext();
+await db.Database.EnsureCreatedAsync();
+var group = await db.Groups.FindAsync("Guest");
 if (group == null)
 {
     //不存在则自动创建
-    await botDbContext.AddAsync(new Group("Guest", null));
+    await db.AddAsync(new Group("Guest", null));
     Log.Warning("System", "Guest组别不存在，已自动创建");
 }
-await botDbContext.SaveChangesAsync();
+await db.SaveChangesAsync();
 
 
 //启动GenHttp
