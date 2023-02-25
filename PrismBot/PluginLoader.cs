@@ -8,8 +8,8 @@ using PrismBot.SDK;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Extensions;
 using PrismBot.SDK.Interfaces;
+using PrismBot.SDK.Models;
 using PrismBot.SDK.Singletons;
-using PrismBot.SDK.Static;
 using Sora.Interfaces;
 using YukariToolBox.LightLog;
 using EndPoint = PrismBot.SDK.Models.EndPoint;
@@ -19,7 +19,7 @@ namespace PrismBot;
 public static class PluginLoader
 {
     public static readonly List<Plugin> LoadedPlugins = new();
-    private static readonly ISoraService? Service = SoraServiceSingleton.Instance.SoraService;
+    private static readonly ISoraService? Service = GlobalTracker.SoraService;
     private static readonly InlineBuilder Handle = Inline.Create();
 
     private static readonly HashSet<IGroupCommand> GroupCommands = new();
@@ -66,7 +66,7 @@ public static class PluginLoader
 
     public static void RegisterAll()
     {
-        var config = ConfigManager.GetBotConfig();
+        var config = Config.Instance;
         foreach (var registeredGroupCommand in GroupCommands)
             Service.Event.OnGroupMessage += async (eventType, args) =>
             {
@@ -226,7 +226,7 @@ public static class PluginLoader
 
     public static void StartGenHttp()
     {
-        var config = ConfigManager.GetBotConfig();
+        var config = Config.Instance;
         Log.Info("Plugin Loader", "正在启动 GenHttp...");
         var thread = new Thread(() =>
         {
