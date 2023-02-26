@@ -1,8 +1,8 @@
 ﻿using PrismBot;
-using PrismBot.plugins.MessageLogger;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Models;
 using PrismBot.SDK.Singletons;
+using PrismBot.SDK.Static;
 using Sora;
 using Sora.Net.Config;
 using Sora.Util;
@@ -37,6 +37,19 @@ var config = Config.Instance;
 Log.Info("System", "配置文件读取成功");
 
 
+//判断是否存在Guest组别
+await using var db = new BotDbContext();
+await db.Database.EnsureCreatedAsync();
+var group = await db.Groups.FindAsync("Guest");
+if (group == null)
+{
+    //不存在则自动创建
+    await db.AddAsync(new Group("Guest", null));
+    Log.Warning("System", "Guest组别不存在，已自动创建");
+}
+await db.SaveChangesAsync();
+
+
 //实例化Sora服务
 var service = SoraServiceFactory.CreateService(new ServerConfig
 {
@@ -58,34 +71,16 @@ if (!Directory.Exists(pluginFolderPath))
     //不存在则创建
     Directory.CreateDirectory(pluginFolderPath);
 }
-//获取plugins目录下的插件
-var pluginFiles = Directory.GetFiles(pluginFolderPath);
-//加载内置插件
-PluginLoader.Load(new MessageLogger());
-//加载插件
-foreach (var pluginFile in pluginFiles)
-    if (pluginFile.EndsWith(".dll"))
-        PluginLoader.LoadFromPath(pluginFile);
-//注册插件事件
-PluginLoader.RegisterAll();
-Log.Info("Plugin Loader", $"已加载 {PluginLoader.LoadedPlugins.Count} 个插件");
+// 加载所有插件
+PluginLoader.LoadPlugins();
 
 
-//判断是否存在Guest组别
-await using var db = new BotDbContext();
-await db.Database.EnsureCreatedAsync();
-var group = await db.Groups.FindAsync("Guest");
-if (group == null)
-{
-    //不存在则自动创建
-    await db.AddAsync(new Group("Guest", null));
-    Log.Warning("System", "Guest组别不存在，已自动创建");
-}
-await db.SaveChangesAsync();
-
-
+// 将所有 Handlers 附加到 Sora 上
+CommandManager.Attach(service);
 //启动GenHttp
-PluginLoader.StartGenHttp();
+EndPointManager.StartServer();
+
+
 //测试
 //启动服务并捕捉错误
 await service.StartService()
