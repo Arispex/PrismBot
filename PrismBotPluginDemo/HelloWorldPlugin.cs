@@ -7,10 +7,10 @@ namespace PrismBotPluginDemo;
 // ReSharper disable once UnusedType.Global
 public class HelloWorldPlugin : PrismBot.SDK.Plugin
 {
-    public override string Name => "Hello World";
-    public override string Author => "Somebody";
-    public override string Version => "1.0";
-    public override string Description => "Hello World";
+    public override string GetPluginName() => "Hello World";
+    public override string GetVersion() => "1.0";
+    public override string GetAuthor() => "Somebody";
+    public override string GetDescription() => "Hello World";
 
     public override void OnLoad()
     {

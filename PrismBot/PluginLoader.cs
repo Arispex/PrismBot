@@ -76,9 +76,9 @@ public static class PluginLoader
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
-                    $"Plugin \"{p.Name}\" has thrown an exception during initialization.", ex);
+                    $"Plugin \"{p.GetPluginName()}\" has thrown an exception during initialization.", ex);
             }
-            Log.Info("Plugin Loader", $"{p.Name} v{p.Version} (by {p.Author}) initiated");
+            Log.Info("Plugin Loader", $"{p.GetPluginName()} v{p.GetVersion()} (by {p.GetAuthor()}) initiated");
         }
 
         Log.Info("Plugin Loader", $"已加载 {_plugins.Count} 个插件");
