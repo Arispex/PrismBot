@@ -6,9 +6,9 @@ namespace PrismBot;
 
 public static class PluginLoader
 {
-    private static readonly string _pluginsDirectory = Path.Combine(AppContext.BaseDirectory, "plugins");
-    private static readonly Dictionary<string, Assembly> _loadedAssemblies = new();
-    private static readonly List<Plugin> _plugins = new();
+    private static readonly string PluginsDirectory = Path.Combine(AppContext.BaseDirectory, "plugins");
+    private static readonly Dictionary<string, Assembly> LoadedAssemblies = new();
+    private static readonly List<Plugin> Plugins = new();
 
     public static void LoadPlugins()
     {
@@ -30,7 +30,7 @@ public static class PluginLoader
                         $"Could not create an instance of plugin class \"{type.FullName}\".", ex);
                 }
 
-                _plugins.Add(pluginInstance);
+                Plugins.Add(pluginInstance);
             }
         }
 
@@ -38,12 +38,12 @@ public static class PluginLoader
         CreateAndAddPluginInstances(Assembly.GetExecutingAssembly());
 
 
-        var pluginPaths = Directory.GetFiles(_pluginsDirectory, "*.dll");
+        var pluginPaths = Directory.GetFiles(PluginsDirectory, "*.dll");
         foreach (var pluginPath in pluginPaths)
         {
             try
             {
-                if (_loadedAssemblies.TryGetValue(pluginPath, out _))
+                if (LoadedAssemblies.TryGetValue(pluginPath, out _))
                     continue;
 
                 Assembly assembly;
@@ -55,7 +55,7 @@ public static class PluginLoader
                 {
                     continue;
                 }
-                _loadedAssemblies.Add(pluginPath, assembly);
+                LoadedAssemblies.Add(pluginPath, assembly);
 
 
                 CreateAndAddPluginInstances(assembly);
@@ -67,7 +67,7 @@ public static class PluginLoader
         }
 
 
-        foreach (var p in _plugins)
+        foreach (var p in Plugins)
         {
             try
             {
@@ -81,6 +81,6 @@ public static class PluginLoader
             Log.Info("Plugin Loader", $"{p.GetPluginName()} v{p.GetVersion()} (by {p.GetAuthor()}) initiated");
         }
 
-        Log.Info("Plugin Loader", $"已加载 {_plugins.Count} 个插件");
+        Log.Info("Plugin Loader", $"已加载 {Plugins.Count} 个插件");
     }
 }
