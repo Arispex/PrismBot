@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Sora.Entities;
 
 namespace PrismBot.SDK.Extensions;
@@ -11,6 +12,6 @@ public static class MessageContextExtension
     /// <returns></returns>
     public static string[] GetCommandArgs(this MessageContext messageContext)
     {
-        return messageContext.RawText.Trim().Split(" ");
+        return Regex.Replace(messageContext.RawText.Trim(), @"\s+", " ").Split(" ");
     }
 }
