@@ -2,7 +2,7 @@ using PrismBot.SDK.Interfaces;
 using Sora.EventArgs.SoraEvent;
 using YukariToolBox.LightLog;
 
-namespace PrismBot.plugins.MessageLogger;
+namespace PrismBot.InternalPlugins.MessageLogger;
 
 public class GroupMessageLogger : IGroupCommand
 {

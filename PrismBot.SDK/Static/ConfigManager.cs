@@ -3,6 +3,7 @@ using YamlDotNet.Serialization;
 
 namespace PrismBot.SDK.Static;
 
+[Obsolete("ConfigManager is deprecated, please use PrismBot.SDK.Utils.ConfigBase instead.")]
 public static class ConfigManager
 {
     /// <summary>
@@ -12,7 +13,7 @@ public static class ConfigManager
     /// <returns></returns>
     public static T GetConfig<T>(params string[] paths)
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, Path.Combine(paths));
+        var configPath = Path.Combine(AppContext.BaseDirectory, Path.Combine(paths));
         if (!File.Exists(configPath)) throw new FileNotFoundException($"找不到配置文件 {paths}");
 
         using var streamReader = new StreamReader(configPath);
@@ -27,11 +28,8 @@ public static class ConfigManager
     /// <param name="paths">配置文件路径</param>
     public static void SaveConfig(object obj, params string[] paths)
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, Path.Combine(paths));
-        
-        using var streamWriter = new StreamWriter(configPath);
-        var serializer = new Serializer();
-        serializer.Serialize(streamWriter, obj);
+        var configPath = Path.Combine(AppContext.BaseDirectory, Path.Combine(paths));
+        File.WriteAllText(configPath, new Serializer().Serialize(obj));
     }
 
     /// <summary>
@@ -40,7 +38,7 @@ public static class ConfigManager
     /// <returns>配置文件</returns>
     public static Config GetBotConfig()
     {
-        var configPath = Path.Combine(Environment.CurrentDirectory, "config.yml");
+        var configPath = Path.Combine(AppContext.BaseDirectory, "config.yml");
         if (!File.Exists(configPath)) throw new FileNotFoundException("找不到配置文件 config.yml");
         using (var streamReader = new StreamReader(configPath))
         {

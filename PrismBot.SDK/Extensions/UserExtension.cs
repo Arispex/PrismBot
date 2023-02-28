@@ -12,10 +12,8 @@ public static class UserExtension
     /// <returns></returns>
     public static async Task<bool> IsGuestAsync(this User user)
     {
-        var botDbContext = new BotDbContext();
-        var player = await botDbContext.Players.FindAsync(user.Id);
-        if (player == null) return true;
-
-        return false;
+        await using var db = new BotDbContext();
+        var player = await db.Players.FindAsync(user.Id);
+        return player == null;
     }
 }

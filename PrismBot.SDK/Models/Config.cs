@@ -1,10 +1,14 @@
+using PrismBot.SDK.Utils;
+
 namespace PrismBot.SDK.Models;
 
 /// <summary>
 ///     机器人主配置文件对象
 /// </summary>
-public class Config
+public class Config : ConfigBase<Config>
 {
+    protected override string ConfigFilePath => Path.Combine(AppContext.BaseDirectory, "config.yml");
+
     public string AccessToken = string.Empty;
     public long[] BlockUsers = new long[0];
     public ushort GenHttpPort = 8081;
