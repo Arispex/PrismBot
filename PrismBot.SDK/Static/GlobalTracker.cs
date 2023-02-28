@@ -1,6 +1,6 @@
 ﻿using Sora.Interfaces;
 
-namespace PrismBot.SDK.Singletons;
+namespace PrismBot.SDK.Static;
 
 public static class GlobalTracker
 {

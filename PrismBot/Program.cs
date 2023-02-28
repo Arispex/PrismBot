@@ -1,7 +1,6 @@
 ﻿using PrismBot;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Models;
-using PrismBot.SDK.Singletons;
 using PrismBot.SDK.Static;
 using Sora;
 using Sora.Net.Config;
