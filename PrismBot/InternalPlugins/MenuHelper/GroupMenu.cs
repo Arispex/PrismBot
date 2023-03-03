@@ -27,7 +27,11 @@ public class GroupMenu : IGroupCommand
         var Commands = CommandManager.RegisteredGroupCommands.Select(x => x.GetCommand())
             .Where(x => x != string.Empty).ToList();
         var args = eventArgs.Message.GetCommandArgs();
-        if (args.Length > 2) await eventArgs.SourceGroup.SendGroupMessage("您输入的参数不符合要求。请参考以下语法进行输入：菜单 [页码]");
+        if (args.Length > 2)
+        {
+            await eventArgs.SourceGroup.SendGroupMessage("您输入的参数不符合要求。请参考以下语法进行输入：菜单 [页码]");
+            return;
+        }
 
         var page = args.Length == 2 ? int.Parse(args[1]) : 1;
         Commands = Commands.Skip((page - 1) * 10).Take(10).ToList();
