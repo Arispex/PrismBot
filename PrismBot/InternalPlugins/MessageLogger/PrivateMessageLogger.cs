@@ -6,9 +6,9 @@ namespace PrismBot.InternalPlugins.MessageLogger;
 
 public class PrivateMessageLogger : IPrivateCommand
 {
-    public bool Match(string type, BaseMessageEventArgs eventArgs)
+    public string GetCommand()
     {
-        return true;
+        return "";
     }
 
     public string GetPermission()

@@ -20,8 +20,10 @@ public class HelloWorldPlugin : PrismBot.SDK.Plugin
 
 public class HelloWorldReplyer : IPrivateCommand
 {
-    public bool Match(string type, BaseMessageEventArgs eventArgs) =>
-        eventArgs.Message.RawText.Contains("Hello World");
+    public string GetCommand()
+    {
+        return "Hello World";
+    }
 
     public string GetPermission() => string.Empty;
 

@@ -6,9 +6,9 @@ namespace PrismBot.InternalPlugins.MessageLogger;
 
 public class GroupMessageLogger : IGroupCommand
 {
-    public bool Match(string type, BaseMessageEventArgs eventArgs)
+    public string GetCommand()
     {
-        return true;
+        return "";
     }
 
     public string GetPermission()
