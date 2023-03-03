@@ -22,7 +22,7 @@ public static class ConfigManager
     }
 
     /// <summary>
-    /// 保存配置文件
+    ///     保存配置文件
     /// </summary>
     /// <param name="obj">配置文件实例</param>
     /// <param name="paths">配置文件路径</param>

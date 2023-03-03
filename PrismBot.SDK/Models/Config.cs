@@ -7,8 +7,6 @@ namespace PrismBot.SDK.Models;
 /// </summary>
 public class Config : ConfigBase<Config>
 {
-    protected override string ConfigFilePath => Path.Combine(AppContext.BaseDirectory, "config.yml");
-
     public string AccessToken = string.Empty;
     public long[] BlockUsers = new long[0];
     public ushort GenHttpPort = 8081;
@@ -17,4 +15,5 @@ public class Config : ConfigBase<Config>
     public ushort Port = 8080;
     public long[] SuperUsers = new long[0];
     public string UniversalPath = string.Empty;
+    protected override string ConfigFilePath => Path.Combine(AppContext.BaseDirectory, "config.yml");
 }

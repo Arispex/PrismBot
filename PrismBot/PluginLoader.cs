@@ -40,7 +40,6 @@ public static class PluginLoader
 
         var pluginPaths = Directory.GetFiles(PluginsDirectory, "*.dll");
         foreach (var pluginPath in pluginPaths)
-        {
             try
             {
                 if (LoadedAssemblies.TryGetValue(pluginPath, out _))
@@ -55,6 +54,7 @@ public static class PluginLoader
                 {
                     continue;
                 }
+
                 LoadedAssemblies.Add(pluginPath, assembly);
 
 
@@ -64,7 +64,6 @@ public static class PluginLoader
             {
                 throw new InvalidOperationException($"Failed to load assembly \"{pluginPath}\".", ex);
             }
-        }
 
 
         foreach (var p in Plugins)
@@ -78,6 +77,7 @@ public static class PluginLoader
                 throw new InvalidOperationException(
                     $"Plugin \"{p.GetPluginName()}\" has thrown an exception during initialization.", ex);
             }
+
             Log.Info("Plugin Loader", $"{p.GetPluginName()} v{p.GetVersion()} (by {p.GetAuthor()}) initiated");
         }
 

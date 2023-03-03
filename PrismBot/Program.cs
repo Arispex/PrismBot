@@ -31,6 +31,7 @@ if (Config.CreateIfNotExist())
     Console.ReadKey();
     Environment.Exit(0);
 }
+
 //读取配置文件
 var config = Config.Instance;
 Log.Info("System", "配置文件读取成功");
@@ -46,6 +47,7 @@ if (group == null)
     await db.AddAsync(new Group("Guest", null));
     Log.Warning("System", "Guest组别不存在，已自动创建");
 }
+
 await db.SaveChangesAsync();
 
 
@@ -66,10 +68,8 @@ GlobalTracker.SoraService = service;
 //检测插件目录是否存在
 var pluginFolderPath = Path.Combine(Environment.CurrentDirectory, "plugins");
 if (!Directory.Exists(pluginFolderPath))
-{
     //不存在则创建
     Directory.CreateDirectory(pluginFolderPath);
-}
 // 加载所有插件
 PluginLoader.LoadPlugins();
 
