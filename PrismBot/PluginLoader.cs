@@ -8,7 +8,7 @@ public static class PluginLoader
 {
     private static readonly string PluginsDirectory = Path.Combine(AppContext.BaseDirectory, "plugins");
     private static readonly Dictionary<string, Assembly> LoadedAssemblies = new();
-    private static readonly List<Plugin> Plugins = new();
+    public static readonly List<Plugin> Plugins = new();
 
     public static void LoadPlugins()
     {
