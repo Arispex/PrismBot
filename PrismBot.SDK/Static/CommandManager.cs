@@ -55,7 +55,7 @@ public static class CommandManager
             .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
         var guest = await db.Groups.FindAsync("Guest");
 
-        foreach (var command in RegisteredGroupCommands.Where(x => x.Match(eventType, args)))
+        foreach (var command in RegisteredGroupCommands.Where(x => args.Message.RawText.StartsWith(x.GetCommand())))
         {
             if (args.IsSuperUser)
             {
@@ -92,7 +92,7 @@ public static class CommandManager
             .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
         var guest = await db.Groups.FindAsync("Guest");
 
-        foreach (var command in RegisteredPrivateCommands.Where(x => x.Match(eventType, args)))
+        foreach (var command in RegisteredPrivateCommands.Where(x => args.Message.RawText.StartsWith(x.GetCommand())))
         {
             if (args.IsSuperUser)
             {
