@@ -28,7 +28,7 @@ public class PlugMan : Plugin
 
     public override void OnLoad()
     {
-        CommandManager.RegisterGroupCommand(new PluginList());
-        CommandManager.RegisterGroupCommand(new PluginInfo());
+        CommandManager.RegisterGroupCommand(this, new PluginList());
+        CommandManager.RegisterGroupCommand(this, new PluginInfo());
     }
 }

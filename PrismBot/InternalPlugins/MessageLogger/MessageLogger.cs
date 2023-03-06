@@ -28,7 +28,7 @@ public class MessageLogger : Plugin
 
     public override void OnLoad()
     {
-        CommandManager.RegisterGroupCommand(new GroupMessageLogger());
-        CommandManager.RegisterPrivateCommand(new PrivateMessageLogger());
+        CommandManager.RegisterGroupCommand(this, new GroupMessageLogger());
+        CommandManager.RegisterPrivateCommand(this, new PrivateMessageLogger());
     }
 }

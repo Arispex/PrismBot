@@ -17,8 +17,9 @@ public static class CommandManager
     ///     注册群命令
     /// </summary>
     /// <param name="command">需要注册的对象</param>
-    public static void RegisterGroupCommand(IGroupCommand command)
+    public static void RegisterGroupCommand(Plugin plugin, IGroupCommand command)
     {
+        plugin.RegisteredGroupCommands.Add(command);
         RegisteredGroupCommands.Add(command);
     }
 
@@ -26,8 +27,9 @@ public static class CommandManager
     ///     注册私聊命令
     /// </summary>
     /// <param name="command">需要注册的对象</param>
-    public static void RegisterPrivateCommand(IPrivateCommand command)
+    public static void RegisterPrivateCommand(Plugin plugin,IPrivateCommand command)
     {
+        plugin.RegisteredPrivateCommands.Add(command);
         RegisteredPrivateCommands.Add(command);
     }
 

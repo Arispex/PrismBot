@@ -37,7 +37,7 @@ public class PluginInfo : IGroupCommand
         }
         foreach (var plugin in plugins)
         {
-            await eventArgs.SourceGroup.SendGroupMessage($"插件名称：{plugin.GetPluginName()}\n插件作者：{plugin.GetAuthor()}\n插件版本：{plugin.GetVersion()}\n插件描述：{plugin.GetDescription()}");
+            await eventArgs.SourceGroup.SendGroupMessage($"插件名称：{plugin.GetPluginName()}\n插件作者：{plugin.GetAuthor()}\n插件版本：{plugin.GetVersion()}\n插件描述：{plugin.GetDescription()}\n已注册的群命令：{string.Join(", ", plugin.RegisteredGroupCommands.Select(x => $"{x.GetCommand()}({x.GetPermission()})"))}\n已注册的私聊命令：{string.Join(", ", plugin.RegisteredPrivateCommands.Select(x => $"{x.GetCommand()}({x.GetPermission()})"))}");
         }
     }
 }

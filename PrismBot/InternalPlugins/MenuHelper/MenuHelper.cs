@@ -27,7 +27,7 @@ public class MenuHelper : Plugin
 
     public override void OnLoad()
     {
-        CommandManager.RegisterPrivateCommand(new PrivateMenu());
-        CommandManager.RegisterGroupCommand(new GroupMenu());
+        CommandManager.RegisterPrivateCommand(this, new PrivateMenu());
+        CommandManager.RegisterGroupCommand(this, new GroupMenu());
     }
 }

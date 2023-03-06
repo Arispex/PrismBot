@@ -10,7 +10,7 @@ public class HelloWorldPlugin : Plugin
 {
     public override string GetPluginName()
     {
-        return "Hello World";
+        return "HelloWorld";
     }
 
     public override string GetVersion()
@@ -30,7 +30,7 @@ public class HelloWorldPlugin : Plugin
 
     public override void OnLoad()
     {
-        CommandManager.RegisterPrivateCommand(new HelloWorldReplyer());
+        CommandManager.RegisterPrivateCommand(this, new HelloWorldReplyer());
     }
 }
 
