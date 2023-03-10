@@ -1,11 +1,11 @@
-name: Build (MacOS-x64)
+name: build-and-package
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-package:
+  build(MacOS-x64):
     runs-on: macOS-latest
     
     steps:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Archive PrismBot with Plugins
         run: |
-          cd PrismBot/bin/Debug/net6.0/
+          cd bin/Debug/net6.0/
           zip -r PrismBot-Macos-x64-Release.zip .
         working-directory: PrismBot/
 
