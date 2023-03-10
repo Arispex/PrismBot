@@ -38,5 +38,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: PrismBot-macos-Release
+          name: PrismBot-Macos-Release
           path: PrismBot/bin/Debug/net6.0/PrismBot-Macos-x64-Release.zip
