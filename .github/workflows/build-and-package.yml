@@ -29,14 +29,8 @@ jobs:
       - name: Move Plugin to Plugins Directory
         run: cp PrismBotPluginDemo/bin/Debug/net6.0/PrismBotPluginDemo.dll PrismBot/bin/Debug/net6.0/Plugins
 
-      - name: Archive PrismBot with Plugins
-        run: |
-          cd bin/Debug/net6.0/
-          zip -r PrismBot-Macos-x64-Release.zip .
-        working-directory: PrismBot/
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: PrismBot-Macos-Release
-          path: PrismBot/bin/Debug/net6.0/PrismBot-Macos-x64-Release.zip
+          path: PrismBot/bin/Debug/net6.0
