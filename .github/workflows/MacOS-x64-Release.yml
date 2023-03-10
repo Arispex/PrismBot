@@ -1,4 +1,4 @@
-name: Build and Package PrismBot
+name: Build (MacOS-x64)
 
 on:
   push:
@@ -32,11 +32,11 @@ jobs:
       - name: Archive PrismBot with Plugins
         run: |
           cd PrismBot/bin/Debug/net6.0/
-          zip -r PrismBot-macos-Release.zip PrismBot.dll Plugins
-        working-directory: PrismBot/bin/Debug/net6.0/
+          zip -r PrismBot-Macos-x64-Release.zip .
+        working-directory: PrismBot/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: PrismBot-macos-Release
-          path: PrismBot/bin/Debug/net6.0/PrismBot-macos-Release.zip
+          path: PrismBot/bin/Debug/net6.0/PrismBot-Macos-x64-Release.zip
