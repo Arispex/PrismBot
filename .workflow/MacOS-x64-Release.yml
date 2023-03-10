@@ -1,0 +1,42 @@
+name: Build and Package PrismBot
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-package:
+    runs-on: macOS-latest
+    
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build PrismBot
+        run: dotnet build PrismBot
+
+      - name: Create Plugins Directory
+        run: mkdir PrismBot/bin/Debug/net6.0/Plugins
+
+      - name: Build PrismBotPluginDemo
+        run: dotnet build PrismBotPluginDemo
+
+      - name: Move Plugin to Plugins Directory
+        run: cp PrismBotPluginDemo/bin/Debug/net6.0/PrismBotPluginDemo.dll PrismBot/bin/Debug/net6.0/Plugins
+
+      - name: Archive PrismBot with Plugins
+        run: |
+          cd PrismBot/bin/Debug/net6.0/
+          zip -r PrismBot-macos-Release.zip PrismBot.dll Plugins
+        working-directory: PrismBot/bin/Debug/net6.0/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: PrismBot-macos-Release
+          path: PrismBot/bin/Debug/net6.0/PrismBot-macos-Release.zip
