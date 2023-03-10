@@ -17,20 +17,17 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
-      - name: Build PrismBot
-        run: dotnet build PrismBot
+      - name: Publish PrismBot
+        run: dotnet publish PrismBot -c Release -o osx-x64 --self-contained -r osx-x64
 
       - name: Create Plugins Directory
-        run: mkdir PrismBot/bin/Debug/net6.0/Plugins
+        run: mkdir osx-x64/Plugins
 
-      - name: Build PrismBotPluginDemo
-        run: dotnet build PrismBotPluginDemo
-
-      - name: Move Plugin to Plugins Directory
-        run: cp PrismBotPluginDemo/bin/Debug/net6.0/PrismBotPluginDemo.dll PrismBot/bin/Debug/net6.0/Plugins
+      - name: Publish PrismBotPluginDemo
+        run: dotnet publish PrismBotPluginDemo -c Release -o osx-x64/Plugins --self-contained -r osx-x64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: PrismBot-Macos-Release
-          path: PrismBot/bin/Debug/net6.0
+          name: PrismBot-osx-x64-release
+          path: osx-x64
