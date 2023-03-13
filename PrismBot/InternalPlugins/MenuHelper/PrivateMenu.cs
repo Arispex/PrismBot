@@ -34,7 +34,7 @@ public class PrivateMenu : IPrivateCommand
         }
 
         var page = args.Length == 2 ? int.Parse(args[1]) : 1;
-        Commands = Commands.Skip((page - 1) * 10).Take(10).ToList();
+        Commands = Commands.Skip((page - 1) * 20).Take(20).ToList();
         Commands.Remove("菜单");
         if (Commands.Count == 0 && page == 1)
         {
