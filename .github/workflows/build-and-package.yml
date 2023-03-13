@@ -27,5 +27,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: PrismBot-${{ matrix.arch }}-x64-release
+          name: PrismBot-${{ matrix.arch }}-release
           path: ${{ matrix.arch }}
