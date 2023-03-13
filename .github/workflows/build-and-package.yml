@@ -6,7 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        arch: [ "win-x64", "osx-x64", "linux-x64", "linux-arm64", "linux-arm" ]
     
     steps:
       - name: Checkout source code
@@ -18,10 +22,10 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Publish PrismBot
-        run: dotnet publish PrismBot -c Release -o osx-x64 -r osx-x64 --no-self-contained
+        run: dotnet publish PrismBot -c Release -o ${{ matrix.arch }} -r ${{ matrix.arch }} --no-self-contained
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: PrismBot-osx-x64-release
-          path: osx-x64
+          name: PrismBot-${{ matrix.arch }}-x64-release
+          path: ${{ matrix.arch }}
