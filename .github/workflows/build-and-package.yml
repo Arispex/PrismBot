@@ -29,3 +29,24 @@ jobs:
         with:
           name: PrismBot-${{ matrix.arch }}-release
           path: ${{ matrix.arch }}
+  
+  build-TShock-Adapter:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Publish PrismBot
+        run: dotnet publish PrismBotTShockAdapter -c Release -o TShockAdapter -r win-x64 --no-self-contained
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: PrismBotTShockAdapter.dll
+          path: TShockAdapter/PrismBotTShockAdapter.dll
