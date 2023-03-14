@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PrismBot.SDK.Data;
+using PrismBot.SDK.Extensions;
 using PrismBot.SDK.Interfaces;
 using PrismBot.SDK.Models;
 using Sora.EventArgs.SoraEvent;
@@ -57,7 +58,7 @@ public static class CommandManager
             .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
         var guest = await db.Groups.FindAsync("Guest");
 
-        foreach (var command in RegisteredGroupCommands.Where(x => args.Message.RawText.StartsWith(x.GetCommand())))
+        foreach (var command in RegisteredGroupCommands.Where(x => args.Message.GetCommandArgs()[0] == x.GetCommand()))
         {
             if (args.IsSuperUser)
             {
@@ -94,7 +95,7 @@ public static class CommandManager
             .FirstOrDefaultAsync(p => p.QQ == args.Sender.Id);
         var guest = await db.Groups.FindAsync("Guest");
 
-        foreach (var command in RegisteredPrivateCommands.Where(x => args.Message.RawText.StartsWith(x.GetCommand())))
+        foreach (var command in RegisteredPrivateCommands.Where(x => args.Message.GetCommandArgs()[0] == x.GetCommand()))
         {
             if (args.IsSuperUser)
             {
