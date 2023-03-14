@@ -30,5 +30,6 @@ public class PlugMan : Plugin
     {
         CommandManager.RegisterGroupCommand(this, new PluginList());
         CommandManager.RegisterGroupCommand(this, new PluginInfo());
+        CommandManager.RegisterGroupCommand(this, new CommandPermission());
     }
 }
