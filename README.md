@@ -12,32 +12,8 @@ PrismBot
 
 ## 关于本项目
 
-这是一个基于 [Sora](https://github.com/Hoshikawa-Kaguya/Sora) 框架的 Terraria [TShock](https://github.com/Pryaxis/TShock) 插件式 QQ 机器人
+这是一个基于 [Sora](https://github.com/Hoshikawa-Kaguya/Sora) 框架的 Terraria [TShock](https://github.com/Pryaxis/TShock) QQ 机器人
 
-这可能是 TShock QQ 机器人的终极解决方案
-
-准确的来说，这更像一个插件框架
-
-你可以使用 C# 编写插件来实现任何你想实现的功能
-
-## 关于 release
-
-release 会整合所有基础插件
-
-~~妈妈再也不用担心我找不着插件啦~~
-
-<details>
-
-<summary>插件列表</summary>
-
-- [Economy](https://github.com/Qianyiovo/Economy)
-- [ElegantWhitelist](https://github.com/Qianyiovo/ElegantWhitelist)
-- [OnlinePlayerFinder](https://github.com/Qianyiovo/OnlinePlayerFinder)
-- [RemoteCommander](https://github.com/Qianyiovo/RemoteCommander)
-- [RemoteMessenger](https://github.com/Qianyiovo/RemoteMessenger)
-- [ServerManager](https://github.com/Qianyiovo/ServerManager)
-
-</details>
 
 ## 开始部署
 
