@@ -39,7 +39,15 @@ public class ElegantWhitelist : Plugin
         {
             Log.Warning("ElegantWhitelist", "未找到配置文件，已自动生成。");
         }
+        var db = new BotDbContext();
+        var group = db.Groups.Find(Config.Instance.DefaultGroup);
+        if (group == null)
+        {
+            db.Groups.Add(new Group(Config.Instance.DefaultGroup, db.Groups.Find("Guest")));
+            Log.Warning("ElegantWhitelist", "默认组不存在，已自动创建。");
+        }
 
+        db.SaveChanges();
         CommandManager.RegisterGroupCommand(this, new AddWhitelist());
         CommandManager.RegisterGroupCommand(this, new RemoveWhitelist());
         CommandManager.RegisterGroupCommand(this, new FreezeAccount());
