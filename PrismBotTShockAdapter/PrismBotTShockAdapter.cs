@@ -19,16 +19,32 @@ public class PrismBotTShockAdapter : TerrariaPlugin
 
     public override string Name => "PrismBotTShockAdapter";
 
-    public override Version Version => new("1.0.2");
+    public override Version Version => new("1.0.3");
 
     public override void Initialize()
     {
-        if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "tshock", "ElegantWhitelistTShockAdapter.json")))
+        var prismBotDirectory = Path.Combine(AppContext.BaseDirectory, "tshock", "PrismBot");
+        if (!Directory.Exists(prismBotDirectory))
+        {
+            Directory.CreateDirectory(prismBotDirectory);
+        }
+
+        var configPath = Path.Combine(AppContext.BaseDirectory, "tshock", "PrismBot", "config.json");
+        if (!File.Exists(configPath))
         {
             File.WriteAllText(
-                Path.Combine(Environment.CurrentDirectory, "tshock", "ElegantWhitelistTShockAdapter.json"),
-                JsonConvert.SerializeObject(new ElegantWhitelistConfig()));
-            TShock.Log.ConsoleWarn("未找到配置文件(ElegantWhitelistTShockAdapter.json)，已自动生成");
+                configPath,
+                JsonConvert.SerializeObject(new Config()));
+            TShock.Log.ConsoleWarn("未找到配置文件(tshock/PrismBot/config.json)，已自动生成");
+        }
+        
+        var elegantWhitelistPath = Path.Combine(AppContext.BaseDirectory, "tshock", "PrismBot", "elegantWhitelist.json");
+        if (!File.Exists(elegantWhitelistPath))
+        {
+            File.WriteAllText(
+                elegantWhitelistPath,
+                JsonConvert.SerializeObject(new ElegantWhitelist()));
+            TShock.Log.ConsoleWarn("未找到配置文件(tshock/PrismBot/elegantWhitelist.json)，已自动生成");
         }
 
         ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
@@ -38,8 +54,8 @@ public class PrismBotTShockAdapter : TerrariaPlugin
     {
         var player = TShock.Players[args.Who];
         using var httpClient = new HttpClient();
-        var config = JsonConvert.DeserializeObject<ElegantWhitelistConfig>(File.ReadAllText(Path.Combine(Environment.CurrentDirectory,
-            "tshock", "ElegantWhitelistTShockAdapter.json")));
+        var elegantWhitelistConfig = JsonConvert.DeserializeObject<ElegantWhitelist>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "tshock", "PrismBot", "elegantWhitelist.json")));
+        var config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "tshock", "PrismBot", "config.json")));
         HttpResponseMessage response;
         try
         {
@@ -49,13 +65,13 @@ public class PrismBotTShockAdapter : TerrariaPlugin
         }
         catch (HttpRequestException)
         {
-            player.Disconnect(config.ConnectionErrorMessage);
+            player.Disconnect(elegantWhitelistConfig.ConnectionErrorMessage);
             return;
         }
 
         var result =
             JsonConvert.DeserializeObject<ElegantWhitelistCheckResponse>(await response.Content.ReadAsStringAsync());
-        if (!result.Data.IsRegistered) player.Disconnect(config.NotInWhitelistMessage);
-        if (result.Data.IsFreeze) player.Disconnect(config.AccountFrozenMessage);
+        if (!result.Data.IsRegistered) player.Disconnect(elegantWhitelistConfig.NotInWhitelistMessage);
+        if (result.Data.IsFreeze) player.Disconnect(elegantWhitelistConfig.AccountFrozenMessage);
     }
 }
