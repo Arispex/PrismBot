@@ -35,5 +35,6 @@ public class GroupManager : Plugin
         CommandManager.RegisterGroupCommand(this, new AddGroupPermission());
         CommandManager.RegisterGroupCommand(this, new RemoveGroupPermission());
         CommandManager.RegisterGroupCommand(this, new ModifyGroupParent());
+        CommandManager.RegisterGroupCommand(this, new ModifyUserGroup());
     }
 }
