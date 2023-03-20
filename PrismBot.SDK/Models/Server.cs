@@ -106,4 +106,13 @@ public class Server
             });
         return JsonSerializer.Deserialize<string[]>(result["response"].ToString());
     }
+
+    public async Task<PlayerInfo> GetPlayerInfoAsync(Player player)
+    {
+        return await SendGetToEndpointAsync<PlayerInfo>("player/info", new Dictionary<string, object>
+        {
+            {"token", Token},
+            {"player", player.UserName}
+        });
+    }
 }
