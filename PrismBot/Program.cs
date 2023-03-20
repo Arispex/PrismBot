@@ -7,6 +7,7 @@ using Sora.Net.Config;
 using Sora.Util;
 using Spectre.Console;
 using YukariToolBox.LightLog;
+using Color = Spectre.Console.Color;
 
 AnsiConsole.Write(new FigletText("PrismBot").Color(Color.Aqua));
 

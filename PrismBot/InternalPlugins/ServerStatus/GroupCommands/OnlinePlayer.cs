@@ -2,10 +2,9 @@ using PrismBot.SDK.Data;
 using PrismBot.SDK.Exceptions;
 using PrismBot.SDK.Extensions;
 using PrismBot.SDK.Interfaces;
-using PrismBot.SDK.Models;
 using Sora.EventArgs.SoraEvent;
 
-namespace PrismBot.InternalPlugins.OnlinePlayerFinder.GroupCommands;
+namespace PrismBot.InternalPlugins.ServerStatus.GroupCommands;
 
 public class OnlinePlayer : IGroupCommand
 {
@@ -16,7 +15,7 @@ public class OnlinePlayer : IGroupCommand
 
     public string GetPermission()
     {
-        return "opf.onlineplayer";
+        return "ss.onlineplayer";
     }
 
     public async Task OnPermissionDeniedAsync(string type, GroupMessageEventArgs eventArgs)
@@ -36,7 +35,7 @@ public class OnlinePlayer : IGroupCommand
         }
         foreach (var server in servers)
         {
-            ServerStatus serverStatus;
+            SDK.Models.ServerStatus serverStatus;
             try
             {
                 serverStatus = await server.GetServerStatusAsync();

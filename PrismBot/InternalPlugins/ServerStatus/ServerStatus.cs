@@ -1,8 +1,8 @@
-﻿using PrismBot.InternalPlugins.OnlinePlayerFinder.GroupCommands;
+﻿using PrismBot.InternalPlugins.ServerStatus.GroupCommands;
 using PrismBot.SDK;
 using PrismBot.SDK.Static;
 
-namespace PrismBot.InternalPlugins.OnlinePlayerFinder;
+namespace PrismBot.InternalPlugins.ServerStatus;
 
 public class OnlinePlayerFinder : Plugin
 {
@@ -13,7 +13,7 @@ public class OnlinePlayerFinder : Plugin
 
     public override string GetVersion()
     {
-        return "1.0.1";
+        return "1.0.2";
     }
 
     public override string GetAuthor()
@@ -23,7 +23,7 @@ public class OnlinePlayerFinder : Plugin
 
     public override string GetDescription()
     {
-        return "获取在线玩家";
+        return "获取服务器信息";
     }
 
     public override void OnLoad()
