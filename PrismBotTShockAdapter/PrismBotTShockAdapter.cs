@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PrismBotTShockAdapter.Models;
+using Rests;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
@@ -19,7 +20,7 @@ public class PrismBotTShockAdapter : TerrariaPlugin
 
     public override string Name => "PrismBotTShockAdapter";
 
-    public override Version Version => new("1.0.3");
+    public override Version Version => new("1.0.4");
 
     public override void Initialize()
     {
@@ -48,6 +49,7 @@ public class PrismBotTShockAdapter : TerrariaPlugin
         }
 
         ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
+        TShock.RestApi.Register("/player/info", OnPlayerInventory);
     }
 
     private async void OnJoin(JoinEventArgs args)
@@ -73,5 +75,35 @@ public class PrismBotTShockAdapter : TerrariaPlugin
             JsonConvert.DeserializeObject<ElegantWhitelistCheckResponse>(await response.Content.ReadAsStringAsync());
         if (!result.Data.IsRegistered) player.Disconnect(elegantWhitelistConfig.NotInWhitelistMessage);
         if (result.Data.IsFreeze) player.Disconnect(elegantWhitelistConfig.AccountFrozenMessage);
+    }
+
+    private object OnPlayerInventory(RestRequestArgs args)
+    {
+        var playerName = args.Parameters["player"];
+        if (playerName == null)
+        {
+            var response = new RestObject()
+            {
+                {"error", "Missing player parameter"}
+            };
+            response["status"] = "400";
+            return response;
+        }
+
+        var player = TShock.UserAccounts.GetUserAccountByName(playerName);
+        if (player == null)
+        {
+            var response = new RestObject()
+            {
+                {"error", "Player not found"}
+            };
+            response["status"] = "400";
+            return response;
+        }
+
+        return new RestObject()
+        {
+            {"response", TShock.CharacterDB.GetPlayerData(null, player.ID)}
+        };
     }
 }
