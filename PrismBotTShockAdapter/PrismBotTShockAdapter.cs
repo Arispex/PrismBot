@@ -101,9 +101,10 @@ public class PrismBotTShockAdapter : TerrariaPlugin
             return response;
         }
 
+        var playerInfo = TShock.CharacterDB.GetPlayerData(null, player.ID);
         return new RestObject()
         {
-            {"response", TShock.CharacterDB.GetPlayerData(null, player.ID)}
+            {"inventory", playerInfo.inventory}
         };
     }
 }
