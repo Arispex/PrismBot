@@ -35,9 +35,9 @@ public class Server
     /// <param name="params">GET请求参数</param>
     /// <typeparam name="T">JSON反序列化类型</typeparam>
     /// <returns>JSON反序列化结果</returns>
-    /// <exception cref="InvalidToken">Token错误</exception>
-    /// <exception cref="NotAuthorized">该端点需要Token验证</exception>
-    /// <exception cref="MissingParameters">缺少指定参数</exception>
+    /// <exception cref="InvalidTokenException">Token错误</exception>
+    /// <exception cref="NotAuthorizedException">该端点需要Token验证</exception>
+    /// <exception cref="MissingParametersException">缺少指定参数</exception>
     public async Task<T> SendGetToEndpointAsync<T>(string endpointPath,
         Dictionary<string, object> @params)
     {
@@ -48,11 +48,13 @@ public class Server
         switch (response.StatusCode)
         {
             case HttpStatusCode.Forbidden:
-                throw new InvalidToken("提供了无效的Token");
+                throw new InvalidTokenException("提供了无效的Token");
             case HttpStatusCode.Unauthorized:
-                throw new NotAuthorized("API需要Token");
+                throw new NotAuthorizedException("API需要Token");
             case HttpStatusCode.BadRequest:
-                throw new MissingParameters("缺少参数");
+                throw new MissingParametersException("缺少参数");
+            case HttpStatusCode.NotFound:
+                throw new EndpointNotFoundException("API端点不存在");
         }
 
         response.EnsureSuccessStatusCode();

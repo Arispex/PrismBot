@@ -45,7 +45,7 @@ public class OnlinePlayer : IGroupCommand
                 messages.Add($"无法连接至 {server.ServerName}，请确认服务器已启动。");
                 continue;
             }
-            catch (InvalidToken)
+            catch (InvalidTokenException)
             {
                 messages.Add($"无法连接至 {server.ServerName}，请检查您的 token 是否正确并且未过期。");
                 continue;

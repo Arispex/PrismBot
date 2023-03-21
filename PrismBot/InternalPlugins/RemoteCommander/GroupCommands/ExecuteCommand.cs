@@ -56,7 +56,7 @@ public class ExecuteCommand : IGroupCommand
         {
             await eventArgs.SourceGroup.SendGroupMessage("无法连接至服务器，请确认服务器已启动。");
         }
-        catch (InvalidToken)
+        catch (InvalidTokenException)
         {
             await eventArgs.SourceGroup.SendGroupMessage("无法连接至服务器，请检查您的 token 是否正确并且未过期。");
         }
