@@ -23,7 +23,10 @@ jobs:
 
       - name: Publish PrismBot
         run: dotnet publish PrismBot -c Release -o ${{ matrix.arch }} -r ${{ matrix.arch }} --no-self-contained
-
+      
+      - name: Copy images
+        run: cp -r PrismBot/images ${{ matrix.arch }}/images
+      
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:

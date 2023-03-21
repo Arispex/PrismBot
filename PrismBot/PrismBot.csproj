@@ -18,6 +18,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
         <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta19" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
         <PackageReference Include="Sora" Version="1.1.0" />
         <PackageReference Include="Spectre.Console" Version="0.46.1-preview.0.2" />
         <PackageReference Include="YamlDotNet" Version="12.3.1" />
