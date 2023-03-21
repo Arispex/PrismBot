@@ -65,7 +65,13 @@ var service = SoraServiceFactory.CreateService(new ServerConfig
 //存放Sora服务
 GlobalTracker.SoraService = service;
 
+var imageFolderPath = Path.Combine(Environment.CurrentDirectory, "images");
+if (!Directory.Exists(imageFolderPath))
+    Directory.CreateDirectory(imageFolderPath);
 
+var imageCacheFolderPath = Path.Combine(Environment.CurrentDirectory, "imageCache");
+if (!Directory.Exists(imageCacheFolderPath))
+    Directory.CreateDirectory(imageCacheFolderPath);
 //检测插件目录是否存在
 var pluginFolderPath = Path.Combine(Environment.CurrentDirectory, "plugins");
 if (!Directory.Exists(pluginFolderPath))
