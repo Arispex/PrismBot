@@ -98,7 +98,8 @@ public class UserBag : IGroupCommand
         foreach (var item in playerInfo.Inventory)
         {
             var frameImage = await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "frame.png"));
-            var itemImage = await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png"));
+            var itemImage = File.Exists(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) ? 
+                await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) : await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", "Item_?.png"));
             if (item.Stack != 0)
             {
                 frameImage.Mutate(x =>
