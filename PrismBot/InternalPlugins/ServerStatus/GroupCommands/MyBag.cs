@@ -63,7 +63,7 @@ public class MyBag : IGroupCommand
         }
         catch (InvalidTokenException)
         {
-            await eventArgs.SourceGroup.SendGroupMessage("服务器Token无效。");
+            await eventArgs.SourceGroup.SendGroupMessage("REST API Token无效。");
             return;
         }
         catch (HttpRequestException)
