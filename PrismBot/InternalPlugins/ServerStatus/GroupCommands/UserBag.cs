@@ -99,7 +99,7 @@ public class UserBag : IGroupCommand
         {
             var frameImage = await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "frame.png"));
             var itemImage = File.Exists(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) ? 
-                await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) : await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", "Item_?.png"));
+                await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) : await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", "Item_-1.png"));
             if (item.Stack != 0)
             {
                 frameImage.Mutate(x =>

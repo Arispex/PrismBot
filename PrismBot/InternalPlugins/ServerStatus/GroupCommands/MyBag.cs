@@ -5,7 +5,6 @@ using PrismBot.SDK.Interfaces;
 using PrismBot.SDK.Models;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
-using Sora.Entities;
 using Sora.Entities.Segment;
 using Sora.EventArgs.SoraEvent;
 
@@ -79,7 +78,7 @@ public class MyBag : IGroupCommand
         {
             var frameImage = await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "frame.png"));
             var itemImage = File.Exists(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) ? 
-                await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) : await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", "Item_?.png"));
+                await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", $"Item_{item.NetId}.png")) : await Image.LoadAsync(Path.Combine(AppContext.BaseDirectory, "images", "items", "Item_-1.png"));
             if (item.Stack != 0)
             {
                 frameImage.Mutate(x =>
