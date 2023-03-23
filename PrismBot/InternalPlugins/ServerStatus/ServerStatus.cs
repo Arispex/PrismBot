@@ -40,5 +40,6 @@ public class ServerStatus : Plugin
         }
         CommandManager.RegisterGroupCommand(this, new OnlinePlayer());
         CommandManager.RegisterGroupCommand(this, new MyBag());
+        CommandManager.RegisterGroupCommand(this, new UserBag());
     }
 }
