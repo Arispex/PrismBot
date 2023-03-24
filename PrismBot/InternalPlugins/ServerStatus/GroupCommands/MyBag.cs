@@ -65,6 +65,11 @@ public class MyBag : IGroupCommand
             await eventArgs.SourceGroup.SendGroupMessage("REST API Token无效。");
             return;
         }
+        catch (MissingParametersException)
+        {
+            await eventArgs.SourceGroup.SendGroupMessage("您未在服务器中注册。");
+            return;
+        }
         catch (HttpRequestException)
         {
             await eventArgs.SourceGroup.SendGroupMessage("服务器连接失败。");
