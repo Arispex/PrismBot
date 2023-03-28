@@ -110,6 +110,11 @@ public class Server
         return JsonSerializer.Deserialize<string[]>(result["response"].ToString());
     }
 
+    /// <summary>
+    ///    获取玩家信息
+    /// </summary>
+    /// <param name="player">玩家对象</param>
+    /// <returns>玩家信息对象</returns>
     public async Task<PlayerInfo> GetPlayerInfoAsync(Player player)
     {
         return await SendGetToEndpointAsync<PlayerInfo>("player/info", new Dictionary<string, object>
