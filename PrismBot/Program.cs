@@ -3,6 +3,7 @@ using PrismBot.SDK.Data;
 using PrismBot.SDK.Models;
 using PrismBot.SDK.Static;
 using Sora;
+using Sora.Entities.Segment.DataModel;
 using Sora.Net.Config;
 using Sora.Util;
 using Spectre.Console;
@@ -87,8 +88,36 @@ CommandManager.Attach(service);
 //启动GenHttp
 EndPointManager.StartServer();
 
+// 初始化消息日志
+//收到群消息日志
+service.Event.OnGroupMessage += (sender, eventArgs) =>
+{
+    Log.Info("System",
+        $"收到来自群 {eventArgs.SourceGroup.GetGroupInfo().Result.groupInfo.GroupName}({eventArgs.SourceGroup.Id}) 内 {eventArgs.SenderInfo.Nick}({eventArgs.SenderInfo.UserId}) 的消息：{eventArgs.Message.RawText}");
+    return ValueTask.CompletedTask;
+};
+//收到私聊消息日志
+service.Event.OnPrivateMessage += (sender, eventArgs) =>
+{
+    Log.Info("System",
+        $"收到来自 {eventArgs.SenderInfo.Nick}({eventArgs.SenderInfo.UserId}) 的私聊消息：{eventArgs.Message.RawText}");
+    return ValueTask.CompletedTask;
+};
+//发送群聊消息日志
+service.Event.OnSelfGroupMessage += (sender, eventArgs) =>
+{
+    Log.Info("System",
+        $"向群 {eventArgs.SourceGroup.GetGroupInfo().Result.groupInfo.GroupName}({eventArgs.SourceGroup.Id}) 发送了消息：{eventArgs.Message.RawText}");
+    return ValueTask.CompletedTask;
+};
+//发送私聊消息日志
+service.Event.OnSelfPrivateMessage += (sender, eventArgs) =>
+{
+    Log.Info("System",
+        $"向 {eventArgs.SenderInfo.Nick}({eventArgs.SenderInfo.UserId}) 发送了私聊消息：{eventArgs.Message.RawText}");
+    return ValueTask.CompletedTask;
+};
 
-//测试
 //启动服务并捕捉错误
 await service.StartService()
     .RunCatch(e => Log.Error("Sora Service", Log.ErrorLogBuilder(e)));
