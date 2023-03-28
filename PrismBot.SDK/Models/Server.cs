@@ -38,6 +38,7 @@ public class Server
     /// <exception cref="InvalidTokenException">Token错误</exception>
     /// <exception cref="NotAuthorizedException">该端点需要Token验证</exception>
     /// <exception cref="MissingParametersException">缺少指定参数</exception>
+    /// <exception cref="EndpointNotFoundException">端点不存在</exception>
     public async Task<T> SendGetToEndpointAsync<T>(string endpointPath,
         Dictionary<string, object> @params)
     {
