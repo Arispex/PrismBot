@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Web;
 using PrismBot.SDK.Exceptions;
+using YamlDotNet.Core.Tokens;
 
 namespace PrismBot.SDK.Models;
 
@@ -107,6 +109,13 @@ public class Server
                 {"token", Token},
                 {"cmd", command}
             });
+        //用正则表达式去除result["response"]的[c/{color.Hex3()}:{text}]类似的颜色代码并且保留text
+        var regex = new Regex(@"\[c\/[0-9a-fA-F]{3}\:(?<text>[^\]]+)\]");
+        var matches = regex.Matches(result["response"].ToString());
+        foreach (Match match in matches)
+        {
+            result["response"] = result["response"].ToString().Replace(match.Value, match.Groups["text"].Value);
+        }
         return JsonSerializer.Deserialize<string[]>(result["response"].ToString());
     }
 
