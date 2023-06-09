@@ -1,8 +1,6 @@
 name: build-and-package
 
-on:
-  push:
-    branches: [ main ]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
