@@ -1,8 +1,10 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PrismBot.SDK.Data;
 using PrismBot.SDK.Exceptions;
 using PrismBot.SDK.Extensions;
 using PrismBot.SDK.Interfaces;
+using SixLabors.ImageSharp.Drawing;
 using Sora.EventArgs.SoraEvent;
 
 namespace PrismBot.InternalPlugins.RemoteCommander.GroupCommands;
@@ -29,11 +31,38 @@ public class ExecuteCommand : IGroupCommand
         var args = eventArgs.Message.GetCommandArgs();
         if (args.Length < 3)
         {
-            await eventArgs.SourceGroup.SendGroupMessage("您输入的参数不符合要求。请参考以下语法进行输入：执行命令 <服务器标识符> <命令(不需要/)>");
+            await eventArgs.SourceGroup.SendGroupMessage("您输入的参数不符合要求。请参考以下语法进行输入：执行命令 <服务器标识符(all全服执行)> <命令(不需要/)>");
             return;
         }
         var command = "/" + string.Join(" ", args.Skip(2).ToArray());
         var db = new BotDbContext();
+        if (args[1].ToLower() == "all" || args[1] == "*")
+        {
+            StringBuilder stringBuilder = new();
+            foreach (var s in db.Servers)
+            {
+                try
+                {
+                    var result = await s.ExecuteRemoteCommandAsync(command);
+                    if (result.Length == 0)
+                    {
+                        stringBuilder.AppendLine($"#️⃣服务器[{s.ServerName}]未返回了个寂寞。");
+                        continue;
+                    }
+                    stringBuilder.AppendLine($"#️⃣服务器[{s.ServerName}]返回信息：\n{string.Join("\n", result)}");
+                }
+                catch (HttpRequestException)
+                {
+                    stringBuilder.AppendLine($"#️⃣无法连接至服务器，请确认服务器已启动。");
+                }
+                catch (InvalidTokenException)
+                {
+                    stringBuilder.AppendLine("#️⃣无法连接至服务器，请检查您的 token 是否正确并且未过期。");
+                }
+            }
+            await eventArgs.SourceGroup.SendGroupMessage(stringBuilder.ToString());
+            return;
+        }
         var server = await db.Servers.FirstOrDefaultAsync(x => x.Identity == args[1]);
         if (server == null)
         {
