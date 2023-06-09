@@ -46,18 +46,18 @@ public class ExecuteCommand : IGroupCommand
                     var result = await s.ExecuteRemoteCommandAsync(command);
                     if (result.Length == 0)
                     {
-                        stringBuilder.AppendLine($"#️⃣服务器[{s.ServerName}]未返回了个寂寞。");
+                        stringBuilder.AppendLine($"{s.ServerName} 返回了个寂寞。");
                         continue;
                     }
-                    stringBuilder.AppendLine($"#️⃣服务器[{s.ServerName}]返回信息：\n{string.Join("\n", result)}");
+                    stringBuilder.AppendLine($"{s.ServerName} 返回信息：\n{string.Join("\n", result)}");
                 }
                 catch (HttpRequestException)
                 {
-                    stringBuilder.AppendLine($"#️⃣无法连接至服务器，请确认服务器已启动。");
+                    stringBuilder.AppendLine($"无法连接至 {s.ServerName}，请确认服务器已启动。");
                 }
                 catch (InvalidTokenException)
                 {
-                    stringBuilder.AppendLine("#️⃣无法连接至服务器，请检查您的 token 是否正确并且未过期。");
+                    stringBuilder.AppendLine($"无法连接至 {s.ServerName}，请检查您的 token 是否正确并且未过期。");
                 }
             }
             await eventArgs.SourceGroup.SendGroupMessage(stringBuilder.ToString());
