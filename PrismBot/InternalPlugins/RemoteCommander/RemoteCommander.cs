@@ -29,5 +29,6 @@ public class RemoteCommander : Plugin
     public override void OnLoad()
     {
         CommandManager.RegisterGroupCommand(this, new ExecuteCommand());
+        CommandManager.RegisterGroupCommand(this, new KickMe());
     }
 }
