@@ -1,5 +1,6 @@
 ﻿using PrismBot.InternalPlugins.ServerStatus.GroupCommands;
 using PrismBot.SDK;
+using PrismBot.SDK.Models;
 using PrismBot.SDK.Static;
 using YukariToolBox.LightLog;
 
@@ -9,7 +10,7 @@ public class ServerStatus : Plugin
 {
     public override string GetPluginName()
     {
-        return "OnlinePlayerFinder";
+        return "ServerStatus";
     }
 
     public override string GetVersion()
@@ -41,5 +42,6 @@ public class ServerStatus : Plugin
         CommandManager.RegisterGroupCommand(this, new OnlinePlayer());
         CommandManager.RegisterGroupCommand(this, new MyBag());
         CommandManager.RegisterGroupCommand(this, new UserBag());
+        CommandManager.RegisterGroupCommand(this, new Progress());
     }
 }
