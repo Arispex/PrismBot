@@ -183,6 +183,7 @@ public class PrismBotTShockAdapter : TerrariaPlugin
                 {"King Slime", NPC.downedSlimeKing}, //史莱姆王
                 {"Eye of Cthulhu", NPC.downedBoss1}, //克苏鲁之眼
                 {"Eater of Worlds / Brain of Cthulhu", NPC.downedBoss2}, //世界吞噬者 或 克苏鲁之脑
+                {"Eater of Worlds / Brain of Cthulhu 2", NPC.downedBoss2}, //仅仅只是懒的适配机器人（x
                 {"Queen Bee", NPC.downedQueenBee}, //蜂后
                 {"Skeletron", NPC.downedBoss3}, //骷髅王
                 {"Deerclops", NPC.downedDeerclops}, //巨鹿

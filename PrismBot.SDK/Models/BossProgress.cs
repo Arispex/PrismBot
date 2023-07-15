@@ -19,7 +19,10 @@ public class BossStatus
     public bool EyeOfCthulhu { get; set; }
 
     [JsonPropertyName("Eater of Worlds / Brain of Cthulhu")]
-    public bool EaterOfWorldsOrBrainOfCthulhu { get; set; }
+    public bool EaterOfWorlds { get; set; }
+    
+    [JsonPropertyName("Eater of Worlds / Brain of Cthulhu 2")]
+    public bool BrainOfCthulhu { get; set; }
 
     [JsonPropertyName("Queen Bee")]
     public bool QueenBee { get; set; }
