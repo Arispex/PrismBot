@@ -24,6 +24,9 @@ jobs:
       
       - name: Copy images
         run: cp -r PrismBot/images ${{ matrix.arch }}/images
+        
+      - name: Copy fonts
+        run: cp -r PrismBot/fonts ${{ matrix.arch }}/fonts
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v2

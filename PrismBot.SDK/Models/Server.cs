@@ -132,4 +132,12 @@ public class Server
             {"player", player.UserName}
         });
     }
+    
+    public async Task<BossProgress> GetServerProgressAsync()
+    {
+        return await SendGetToEndpointAsync<BossProgress>("prismbot/progress", new Dictionary<string, object>
+        {
+            {"token", Token}
+        });
+    }
 }
