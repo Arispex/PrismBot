@@ -1,11 +1,11 @@
-﻿using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PrismBotTShockAdapter.Models;
 using Rests;
+using System.Reflection;
+using PrismBotTShockAdapter.Modules;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
-using TShockAPI.DB;
 
 namespace PrismBotTShockAdapter;
 
@@ -22,7 +22,7 @@ public class PrismBotTShockAdapter : TerrariaPlugin
 
     public override string Name => "PrismBotTShockAdapter";
 
-    public override Version Version => new("1.0.4");
+    public override Version Version => new("1.0.5");
 
     public override void Initialize()
     {
@@ -51,28 +51,21 @@ public class PrismBotTShockAdapter : TerrariaPlugin
         }
 
 
-        // Database Initialization
-
-        var tableCreator = new SqlTableCreator(
-            TShock.DB,
-            TShock.DB.GetSqlType() == SqlType.Sqlite ? new SqliteQueryCreator() : new MysqlQueryCreator());
-
-        var deathRankingTable = new SqlTable("PB_DeathRanking",
-            new SqlColumn("AccountID", MySqlDbType.Int32) { Primary = true },
-            new SqlColumn("DeathCount", MySqlDbType.Int32));
-        tableCreator.EnsureTableStructure(deathRankingTable);
-
-
         // Registration and Hooking
 
         ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
         TShock.RestApi.Register("/player/info", OnPlayerInventory);
 
-        TShockAPI.GetDataHandlers.KillMe.Register(OnPlayerDeath);
-        TShock.RestApi.Register("/prismbot/death_ranking", OnRestDeathRanking);
+        // Module Initialization
+
+        ModuleBase.LoadModulesFromAssembly(Assembly.GetExecutingAssembly());
+        ModuleBase.InitializeModules();
 
         TShock.RestApi.Register("/prismbot/progress", Progress);
+
     }
+
+    #region Whitelist
 
     private async void OnJoin(JoinEventArgs args)
     {
@@ -127,51 +120,6 @@ public class PrismBotTShockAdapter : TerrariaPlugin
         return new RestObject()
         {
             {"inventory", playerInfo.inventory}
-        };
-    }
-
-    #region Death Ranking
-
-    private void OnPlayerDeath(object? sender, GetDataHandlers.KillMeEventArgs e)
-    {
-        try
-        {
-            var player = TShock.Players[e.PlayerId];
-            if (player.Account == null)
-                return;
-
-            TShock.DB.Query(
-                Utils.SwitchDBQuery(
-                    "INSERT INTO PB_DeathRanking (AccountID, DeathCount) VALUES (@0, 1) ON DUPLICATE KEY UPDATE DeathCount=DeathCount+1",
-                    "INSERT INTO PB_DeathRanking (AccountID, DeathCount) VALUES (@0, 1) ON CONFLICT(AccountID) DO UPDATE SET DeathCount=DeathCount+1"),
-                player.Account.ID);
-        }
-        catch (Exception ex)
-        {
-            TShock.Log.ConsoleWarn($"[PrismBotAdapter] Exception occur at {nameof(OnPlayerDeath)}, Ex:\n{ex}");
-        }
-    }
-
-    private object OnRestDeathRanking(RestRequestArgs args)
-    {
-        var ranking = new List<dynamic>();
-        using (var reader =
-               TShock.DB.QueryReader(
-                   "SELECT Users.Username AS Username, DeathCount FROM PB_DeathRanking INNER JOIN Users ON PB_DeathRanking.AccountID=Users.ID ORDER BY DeathCount DESC"))
-        {
-            while (reader.Read())
-            {
-                ranking.Add(new
-                {
-                    PlayerName = reader.Get<string>("Username"),
-                    DeathCount = reader.Get<int>("DeathCount")
-                });
-            }
-        }
-
-        return new RestObject
-        {
-            { "ranking", ranking }
         };
     }
 
