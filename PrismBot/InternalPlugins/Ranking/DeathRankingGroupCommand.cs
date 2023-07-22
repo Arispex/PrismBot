@@ -1,38 +1,20 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
-using PrismBot.SDK;
-using PrismBot.SDK.Data;
-using PrismBot.SDK.Extensions;
+﻿using PrismBot.SDK.Data;
 using PrismBot.SDK.Interfaces;
-using PrismBot.SDK.Static;
 using Sora.EventArgs.SoraEvent;
+using System.Text.Json.Serialization;
+using System.Text;
+using Microsoft.EntityFrameworkCore;
+using PrismBot.SDK.Extensions;
 
-namespace PrismBot.InternalPlugins.DeathRanking;
+namespace PrismBot.InternalPlugins.Ranking;
 
-public class DeathRanking : Plugin
-{
-    public override string GetPluginName() => "Death Ranking";
-
-    public override string GetVersion() => "1.0.0";
-
-    public override string GetAuthor() => "LaoSparrow";
-
-    public override string GetDescription() => "死亡排行榜";
-
-    public override void OnLoad()
-    {
-        CommandManager.RegisterGroupCommand(this, new RankingGroupCommand());
-    }
-}
-
-public class RankingGroupCommand : IGroupCommand
+public class DeathRankingGroupCommand : IGroupCommand
 {
     private const int PAGE_SIZE = 10;
 
     public string GetCommand() => "死亡排行榜";
 
-    public string GetPermission() => "deathranking.list";
+    public string GetPermission() => "ranking.death";
 
     public async Task OnPermissionDeniedAsync(string type, GroupMessageEventArgs eventArgs)
     {
@@ -50,15 +32,8 @@ public class RankingGroupCommand : IGroupCommand
 
         var currentPage = 1;
         if (args.Length >= 3 && !int.TryParse(args[2], out currentPage))
-        {
-            await eventArgs.SourceGroup.SendGroupMessage("页数需为数字并大于0");
-            return;
-        }
-        if (currentPage <= 0)
-        {
-            await eventArgs.SourceGroup.SendGroupMessage("页数需为数字并大于0");
-            return;
-        }
+            currentPage = 1;
+        currentPage = Math.Max(currentPage, 1);
 
         await using var db = new BotDbContext();
         var server = await db.Servers.FirstOrDefaultAsync(x => x.Identity == args[1]);
@@ -68,7 +43,7 @@ public class RankingGroupCommand : IGroupCommand
             return;
         }
 
-        var result = await server.SendGetToEndpointAsync<DeathRankingRespond>("prismbot/death_ranking", new Dictionary<string, object>
+        var result = await server.SendGetToEndpointAsync<DeathRankingRespond>("prismbot/ranking/death", new Dictionary<string, object>
         {
             { "token", server.Token }
         });
@@ -78,20 +53,27 @@ public class RankingGroupCommand : IGroupCommand
             return;
         }
 
+        var lastPageNum = result.Ranking.Length / PAGE_SIZE + Math.Min(result.Ranking.Length % PAGE_SIZE, 1);
+        currentPage = Math.Min(currentPage, lastPageNum);
+
         var sb = new StringBuilder();
         sb.AppendFormat("服务器: {0}({1})\n", server.ServerName, server.Identity);
         sb.Append("---死亡排行榜---\n");
+        var index = (currentPage - 1) * PAGE_SIZE + 1;
         foreach (var r in result.Ranking.Skip((currentPage - 1) * PAGE_SIZE).Take(PAGE_SIZE))
         {
-            sb.AppendFormat("{0}: {1}\n", r.PlayerName, r.DeathCount);
+            sb.AppendFormat("{0}. {1}: {2}\n", index, r.PlayerName, r.DeathCount);
+            index++;
         }
 
-        sb.AppendFormat("---页: <{0}/{1}>---", currentPage, result.Ranking.Length / PAGE_SIZE + 1);
+        sb.AppendFormat("---页: <{0}/{1}>---", currentPage, lastPageNum);
         await eventArgs.SourceGroup.SendGroupMessage(sb.ToString());
     }
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DeathRankingRespond
     {
+        // ReSharper disable once ClassNeverInstantiated.Global
         public class DeathRankingRecord
         {
             public string PlayerName { get; set; }

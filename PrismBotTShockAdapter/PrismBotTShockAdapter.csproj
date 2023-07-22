@@ -7,8 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Sora" Version="1.3.0" />
-      <PackageReference Include="TShock" Version="5.1.3" />
+	    <PackageReference Include="TShock" Version="5.1.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Modules\" />
     </ItemGroup>
 
 </Project>
