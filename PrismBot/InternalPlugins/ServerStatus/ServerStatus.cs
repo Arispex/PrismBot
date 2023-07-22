@@ -43,5 +43,6 @@ public class ServerStatus : Plugin
         CommandManager.RegisterGroupCommand(this, new MyBag());
         CommandManager.RegisterGroupCommand(this, new UserBag());
         CommandManager.RegisterGroupCommand(this, new Progress());
+        CommandManager.RegisterGroupCommand(this, new Wiki());
     }
 }
